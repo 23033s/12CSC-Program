@@ -2,6 +2,7 @@ import tkinter as tk #import the main GUI library to my program
 from PIL import Image, ImageTk #import Pillow to handle images
 
 root = tk.Tk() #create intro window
+root.title("Quiz Homepage") #create a title for window
 image = Image.open("Images/homepage.png") #open the background image file from the image folder
 photo = ImageTk.PhotoImage(image) #convert image to a format so that tkinter can use
 label = tk.Label(root, image=photo) #create a label widget to display the image
@@ -29,7 +30,7 @@ outcome_label.place(relx=0.5, rely=0.58, anchor="center") #position the label us
 def check_username(): #function to check whether user enters a valid name
     username = username_entry.get() #retrieve user input
 
-    if username.isdigit() #check if users enters all numbers as their username
+    if any(char.isdigit() for char in username): #check if users enters all numbers as their username
         outcome_label.config(text="You can not have numbers in your name", fg="red") #show error message telling users they can't have numbers in their name
     elif username.strip() == "": #check if users enters nothing
         outcome_label.config(text="Please enter a name", fg="red") #show error message for empty name
@@ -46,16 +47,18 @@ button.config(command=check_username) #check username for the function
 def open_next_window(): #create next window
     new_window = tk.Toplevel(root) #create a pop-up window
     new_window.title("Quiz Main Questions Page") #assign a name to window
-    next_img = Image.open("Images/q1.png") #opem background image
-    next_photo = ImageTk.PhotoImage(next_img)
-    img_label = tk.Label(new_window, image=next_photo)
-    img_label.image = next_photo
-    img_label.pack(pady=10)
+    next_img = Image.open("Images/q1.png") #open background image
+    next_photo = ImageTk.PhotoImage(next_img) #convert image to a format tkinter can use
+    img_label = tk.Label(new_window, image=next_photo) #create a label widget to display background image
+    img_label.image = next_photo #reference image
+    img_label.pack(pady=10) #add padding to main window
 
 
 
 
 
-    root.withdraw()
 
-root.mainloop()
+
+    root.withdraw() #hide the window
+
+root.mainloop() #run the loop to keep window open
