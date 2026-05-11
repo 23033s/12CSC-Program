@@ -1,7 +1,55 @@
 import tkinter as tk #import the main GUI library to my program
 from PIL import Image, ImageTk #import Pillow to handle images
-
+import pyglet #import pyglet to use custom font
+from tkinter import messagebox
+quiz_data = {
+    "Easy": [
+        {"question": "What planet is known as the Red Planet?", "choices": ["Earth", "Mars", "Jupiter", "Venus"], "answer": "Mars"},
+        {"question": "What gas do humans need to breathe?", "choices": ["Carbon Dioxide", "Oxygen", "Nitrogen", "Hydrogen"], "answer": "Oxygen"},
+        {"question": "Which organ pumps blood in the human body?", "choices": ["Brain", "Lungs", "Heart", "Kidney"], "answer": "Heart"},
+        {"question": "Which state of matter has a fixed shape?", "choices": ["Liquid", "Gas", "Solid", "Plasma"], "answer": "Solid"},
+        {"question": "What is the freezing point of water?", "choices": ["0°C", "50°C", "100°C", "-10°C"], "answer": "0°C"}
+    ],
+    "Medium": [
+        {"question": "Which blood cell carries oxygen?", "choices": ["White blood cells", "Red blood cells", "Platelets", "Plasma"], "answer": "Red blood cells"},
+        {"question": "Which energy transformation occurs in a moving car?", "choices": ["Chemical → kinetic", "Kinetic → chemical", "Thermal → light", "Light → sound"], "answer": "Chemical → kinetic"},
+        {"question": "Which planet has the strongest gravity?", "choices": ["Saturn", "Earth", "Venus", "Jupiter"], "answer": "Jupiter"},
+        {"question": "What is friction mainly caused by?", "choices": ["Gravity", "Surface contact", "Magnetism", "Light"], "answer": "Surface contact"},
+        {"question": "Which part of the cell controls activities?", "choices": ["Cytoplasm", "Nucleus", "Membrane", "Ribosome"], "answer": "Nucleus"}
+    ],
+    "Hard": [
+        {"question": "What is the chemical symbol for potassium?", "choices": ["P", "K", "Pt", "Po"], "answer": "K"},
+        {"question": "What type of bond involves sharing electrons?", "choices": ["Ionic", "Covalent", "Metallic", "Hydrogen"], "answer": "Covalent"},
+        {"question": "Which part of the brain controls voluntary actions?", "choices": ["Cerebellum", "Cerebrum", "Brainstem", "Neuron"], "answer": "Cerebrum"},
+        {"question": "Which gas is most abundant in Earth’s atmosphere?", "choices": ["Oxygen", "Carbon Dioxide", "Nitrogen", "Hydrogen"], "answer": "Nitrogen"},
+        {"question": "What is the pH of a neutral solution?", "choices": ["0", "7", "14", "10"], "answer": "7"}
+    ],
+    "Challenging": [
+        {"question": "In the Heisenberg uncertainty principle, which two properties cannot be observed precisely at the same time?", "choices": ["Velocity and Acceleration", "Mass and Energy", "Position and Momentum", "Spin and Charge"], "answer": "Position and Momentum"},
+        {"question": "What is the main purpose of enzymes?", "choices": ["Store energy", "Speed up reactions", "Carry oxygen", "Break bones"], "answer": "Speed up reactions"},
+        {"question": "What is the name of the radiation emitted by black holes due to quantum effects?", "choices": ["Synchrotron radiation", "Hawking radiation", "Cherenkov radiation", "Bremsstrahlung"], "answer": "Hawking radiation"},
+        {"question": "Which of the following is the SI unit of luminous intensity?", "choices": ["Lumen", "Lux", "Candela", "Watt"], "answer": "Candela"},
+        {"question": "Which type of quark is the heaviest?", "choices": ["Up", "Bottom", "Top", "Charm"], "answer": "Top"}
+    ],
+    "Mix": [
+        {"question": "What is the rarest naturally occurring element on Earth?", "choices": ["Uranium", "Astatine", "Francium", "Rhodium"], "answer": "Astatine"},
+        {"question": "Which protein is primarily responsible for the maintenance of osmotic pressure in blood?", "choices": ["Gamma globulin", "Immunoglobulin", "Beta macroglobulin", "Albumin"], "answer": "Albumin"},
+        {"question": "What is the chemical symbol for gold?", "choices": ["Au", "Ag", "Gd", "Go"], "answer": "Au"},
+        {"question": "What is the powerhouse of the cell?", "choices": ["Nucleus", "Mitochondria", "Ribosome", "Membrane"], "answer": "Mitochondria"},
+        {"question": "What is the chemical formula for water?", "choices": ["CO2", "H2O", "O2", "NaCl"], "answer": "H2O"}
+    ],
+    "TrueFalse": [
+        {"question": "The Moon is bigger than Earth.", "choices": ["True", "False"], "answer": "False"},
+        {"question": "Plants absorb oxygen during photosynthesis.", "choices": ["True", "False"], "answer": "False"},
+        {"question": "A photon has zero mass and cannot exert physical pressure.", "choices": ["True", "False"], "answer": "False"},
+        {"question": "Electricity is a form of energy.", "choices": ["True", "False"], "answer": "True"},
+        {"question": "Momentum depends on both mass and velocity.", "choices": ["True", "False"], "answer": "True"}
+    ]
+}
+pyglet.font.add_file("fonts/Fredoka.ttf") #Load the font file from folder
 root = tk.Tk() #create intro window
+root.geometry("1225x690") #resize window
+root.resizable(False, False)
 root.title("Quiz Homepage") #create a title for window
 image = Image.open("Images/homepage.png") #open the background image file from the image folder
 photo = ImageTk.PhotoImage(image) #convert image to a format so that tkinter can use
@@ -47,18 +95,30 @@ button.config(command=check_username) #check username for the function
 def open_next_window(): #create next window
     new_window = tk.Toplevel(root) #create a pop-up window
     new_window.title("Quiz Main Questions Page") #assign a name to window
-    next_img = Image.open("Images/q1.png") #open background image
+    new_window.geometry("1225x690")
+    new_window.resizable(False, False)
+    next_img = Image.open("Images/q1.png") #open background image for first question
     next_photo = ImageTk.PhotoImage(next_img) #convert image to a format tkinter can use
     img_label = tk.Label(new_window, image=next_photo) #create a label widget to display background image
     img_label.image = next_photo #reference image
     img_label.pack(pady=10) #add padding to main window
+    answer_buttons = []
 
+    button_positions = [
 
-
-
-
-
-
+        (0.28, 0.58),
+        (0.66, 0.58),
+        (0.28, 0.82),
+        (0.66, 0.82)
+    ]
+    submit_button = tk.Button(
+        new_window,
+        text="Submit",
+        font="Fredoka",
+        size="30",
+        bg="white",
+        relief="flat")
+    submit_button.place(relx=0.78, rely=0.42, anchor="center")
     root.withdraw() #hide the window
 
 root.mainloop() #run the loop to keep window open
