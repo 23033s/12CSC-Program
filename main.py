@@ -2,6 +2,12 @@ import tkinter as tk #import the main GUI library to my program
 from PIL import Image, ImageTk #import Pillow to handle images
 import pyglet #import pyglet to use custom font
 from tkinter import messagebox
+#Variables for my quiz
+score = 0
+current_index=0
+all_questions= []
+selected_choice= ""
+#dictionary of difficulty of question, questions, answer choices and answers
 quiz_data = {
     "Easy": [
         {"question": "What planet is known as the Red Planet?", "choices": ["Earth", "Mars", "Jupiter", "Venus"], "answer": "Mars"},
@@ -47,6 +53,7 @@ quiz_data = {
     ]
 }
 pyglet.font.add_file("fonts/Fredoka.ttf") #Load the font file from folder
+pyglet.font.add_file("fonts/Agrandir.ttf")#Load the font file from folder
 root = tk.Tk() #create intro window
 root.geometry("1225x690") #resize window
 root.resizable(False, False)
@@ -73,7 +80,7 @@ def on_leave(event): #function for when the user's cursor leaves start button
 button.bind("<Enter>", on_enter) #link mouse entry to previous function (on_enter)
 button.bind("<Leave>", on_leave) #link mouse exit to previous function (on_leave)
 
-outcome_label = tk.Label(root, text="Please Enter In Your Name", font=("Arial", 15)) #Ask user to enter their name
+outcome_label = tk.Label(root, text="Please Enter In Your Name", font=("Agrandir", 15, "bold")) #Ask user to enter their name
 outcome_label.place(relx=0.5, rely=0.58, anchor="center") #position the label using coordinates and centre the label
 def check_username(): #function to check whether user enters a valid name
     username = username_entry.get() #retrieve user input
@@ -102,23 +109,8 @@ def open_next_window(): #create next window
     img_label = tk.Label(new_window, image=next_photo) #create a label widget to display background image
     img_label.image = next_photo #reference image
     img_label.pack(pady=10) #add padding to main window
-    answer_buttons = []
 
-    button_positions = [
 
-        (0.28, 0.58),
-        (0.66, 0.58),
-        (0.28, 0.82),
-        (0.66, 0.82)
-    ]
-    submit_button = tk.Button(
-        new_window,
-        text="Submit",
-        font="Fredoka",
-        size="30",
-        bg="white",
-        relief="flat")
-    submit_button.place(relx=0.78, rely=0.42, anchor="center")
     root.withdraw() #hide the window
 
 root.mainloop() #run the loop to keep window open
