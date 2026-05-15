@@ -104,11 +104,105 @@ def open_next_window(): #create next window
     new_window.title("Quiz Main Questions Page") #assign a name to window
     new_window.geometry("1225x690")
     new_window.resizable(False, False)
-    next_img = Image.open("Images/q1.png") #open background image for first question
-    next_photo = ImageTk.PhotoImage(next_img) #convert image to a format tkinter can use
-    img_label = tk.Label(new_window, image=next_photo) #create a label widget to display background image
-    img_label.image = next_photo #reference image
-    img_label.pack(pady=10) #add padding to main window
+
+    bg_image = Image.open("Images/q1.png") #open background image for first question
+    bg_photo = ImageTk.PhotoImage(bg_image) #convert image to a format tkinter can use
+    bg_label = tk.Label(new_window, image=bg_photo) #create a label widget to display background image
+    bg_label.image = bg_photo #reference image
+    bg_label.place(x=0, y=0, relwidth=1, relheight=1)
+
+    question_label = tk.Label(
+        new_window,
+        text="Question 1",
+        font=("Fredoka", 50, "bold"),
+        fg="black",
+        bg="white",
+    )
+
+    question_label.place(x=280, y=30, width=600, height=80)
+
+    progress_label = tk.Label(
+        new_window,
+        text="1/30",
+        font=("Fredoka", 42, "bold"),
+        fg="black",
+        bg="white"
+    )
+
+    progress_label.place(x=58, y=43, width=120, height=70)
+
+    exit_btn = tk.Button(
+        new_window,
+        text="QUIT",
+        font=("Fredoka", 25, "bold"),
+        fg="black",
+        bg="white",
+        relief="flat",
+        cursor="hand2"
+    )
+
+    exit_btn.place(x=158, y=255, width=100, height=70)
+
+    submit_btn = tk.Button(
+        new_window,
+        text="SUBMIT",
+        font=("Fredoka", 25, "bold"),
+        fg="black",
+        bg="white",
+        relief="flat",
+        cursor="hand2"
+    )
+
+    submit_btn.place(x=905, y=255, width=120, height=70)
+
+    answer1 = tk.Button(
+        new_window,
+        text="Answer 1",
+        font=("Fredoka", 14),
+        fg="black",
+        bg="white",
+        relief="flat",
+        cursor="hand2"
+    )
+
+    answer1.place(x=190, y=405, width=320, height=60)
+
+    answer2 = tk.Button(
+        new_window,
+        text="Answer 2",
+        font=("Fredoka", 14),
+        fg="black",
+        bg="white",
+        relief="flat",
+        cursor="hand2"
+    )
+
+    answer2.place(x=650, y=405, width=320, height=60)
+
+    answer3 = tk.Button(
+        new_window,
+        text="Answer 3",
+        font=("Fredoka", 14),
+        fg="black",
+        bg="white",
+        relief="flat",
+        cursor="hand2"
+    )
+
+    answer3.place(x=190, y=555, width=320, height=60)
+
+    answer4 = tk.Button(
+        new_window,
+        text="Answer 4",
+        font=("Fredoka", 14),
+        fg="black",
+        bg="white",
+        relief="flat",
+        cursor="hand2"
+    )
+
+    answer4.place(x=650, y=555, width=320, height=60)
+
 
 
     root.withdraw() #hide the window
