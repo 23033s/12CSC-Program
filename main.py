@@ -119,7 +119,7 @@ def open_next_window(): #create next window
         bg="white",
     )
 
-    question_label.place(x=280, y=30, width=600, height=80)
+    question_label.place(x=285, y=35, width=600, height=80)
 
     progress_label = tk.Label(
         new_window,
@@ -158,50 +158,50 @@ def open_next_window(): #create next window
     answer1 = tk.Button(
         new_window,
         text="Answer 1",
-        font=("Fredoka", 14),
+        font=("Fredoka", 18, "bold"),
         fg="black",
         bg="white",
         relief="flat",
         cursor="hand2"
     )
 
-    answer1.place(x=190, y=405, width=320, height=60)
+    answer1.place(x=202, y=416, width=322, height=58)
 
     answer2 = tk.Button(
         new_window,
         text="Answer 2",
-        font=("Fredoka", 14),
+        font=("Fredoka", 18, "bold"),
         fg="black",
         bg="white",
         relief="flat",
         cursor="hand2"
     )
 
-    answer2.place(x=650, y=405, width=320, height=60)
+    answer2.place(x=660, y=416, width=322, height=58)
 
     answer3 = tk.Button(
         new_window,
         text="Answer 3",
-        font=("Fredoka", 14),
+        font=("Fredoka", 18, "bold"),
         fg="black",
         bg="white",
         relief="flat",
         cursor="hand2"
     )
 
-    answer3.place(x=190, y=555, width=320, height=60)
+    answer3.place(x=202, y=567, width=322, height=58)
 
     answer4 = tk.Button(
         new_window,
         text="Answer 4",
-        font=("Fredoka", 14),
+        font=("Fredoka", 18, "bold"),
         fg="black",
         bg="white",
         relief="flat",
         cursor="hand2"
     )
 
-    answer4.place(x=650, y=555, width=320, height=60)
+    answer4.place(x=660, y=567, width=322, height=58)
 
 
 
