@@ -2,29 +2,28 @@ import tkinter as tk #import the main GUI library to my program
 from PIL import Image, ImageTk #import Pillow to handle images
 import pyglet #import pyglet to use custom font
 from tkinter import messagebox
-#Variables for my quiz
+#Global variables for my quiz
 score = 0
 current_index=0
 all_questions= []
 selected_choice= ""
-#dictionary of difficulty of question, questions, answer choices and answers
+#dictionary of difficulty of question, questions, answer choices, answers and background image for that question
 quiz_data = {
-        {"question": "What planet is known as the Red Planet?", "choices": ["Earth", "Mars", "Jupiter", "Venus"], "answer": "Mars"}, "background": "Images/q1.png",
-        {"question": "What gas do humans need to breathe?", "choices": ["Carbon Dioxide", "Oxygen", "Nitrogen", "Hydrogen"], "answer": "Oxygen"},
-        {"question": "Which organ pumps blood in the human body?", "choices": ["Brain", "Lungs", "Heart", "Kidney"], "answer": "Heart"},
-        {"question": "Which state of matter has a fixed shape?", "choices": ["Liquid", "Gas", "Solid", "Plasma"], "answer": "Solid"},
-        {"question": "Which blood cell carries oxygen?", "choices": ["White blood cells", "Red blood cells", "Platelets", "Plasma"], "answer": "Red blood cells"},
-        {"question": "What is friction mainly caused by?", "choices": ["Gravity", "Surface contact", "Magnetism", "Light"], "answer": "Surface contact"},
-        {"question": "Which part of the cell controls activities?", "choices": ["Cytoplasm", "Nucleus", "Membrane", "Ribosome"], "answer": "Nucleus"},
-        {"question": "Which part of the brain controls voluntary actions?", "choices": ["Cerebellum", "Cerebrum", "Brainstem", "Neuron"], "answer": "Cerebrum"},
-        {"question": "In the Heisenberg uncertainty principle, which two properties cannot be observed precisely at the same time?", "choices": ["Velocity and Acceleration", "Mass and Energy", "Position and Momentum", "Spin and Charge"], "answer": "Position and Momentum"},
-        {"question": "What is the main purpose of enzymes?", "choices": ["Store energy", "Speed up reactions", "Carry oxygen", "Break bones"], "answer": "Speed up reactions"},
-        {"question": "What is the name of the radiation emitted by black holes due to quantum effects?", "choices": ["Synchrotron radiation", "Hawking radiation", "Cherenkov radiation", "Bremsstrahlung"], "answer": "Hawking radiation"},
-        {"question": "Which of the following is the SI unit of luminous intensity?", "choices": ["Lumen", "Lux", "Candela", "Watt"], "answer": "Candela"},
-        {"question": "What is the rarest naturally occurring element on Earth?", "choices": ["Uranium", "Astatine", "Francium", "Rhodium"], "answer": "Astatine"},
-        {"question": "Which protein is primarily responsible for the maintenance of osmotic pressure in blood?", "choices": ["Gamma globulin", "Immunoglobulin", "Beta macroglobulin", "Albumin"], "answer": "Albumin"},
-        {"question": "What is the powerhouse of the cell?", "choices": ["Nucleus", "Mitochondria", "Ribosome", "Membrane"], "answer": "Mitochondria"},
-
+    {"question": "What planet is known as the Red Planet?", "choices": ["Earth", "Mars", "Jupiter", "Venus"], "answer": "Mars", "background": "Images/q1.png"},
+    {"question": "What gas do humans need to breathe?", "choices": ["Carbon Dioxide", "Oxygen", "Nitrogen", "Hydrogen"], "answer": "Oxygen", "background": "Images/q2.png"},
+    {"question": "Which organ pumps blood in the human body?", "choices": ["Brain", "Lungs", "Heart", "Kidney"],"answer": "Heart", "background": "Images/q3.png"},
+    {"question": "Which state of matter has a fixed shape?", "choices": ["Liquid", "Gas", "Solid", "Plasma"], "answer": "Solid", "background": "Images/q4.png"},
+    {"question": "Which blood cell carries oxygen?", "choices": ["White blood cells", "Red blood cells", "Platelets", "Plasma"], "answer": "Red blood cells", "background": "Images/q5.png"},
+    {"question": "What is friction mainly caused by?", "choices": ["Gravity", "Surface contact", "Magnetism", "Light"], "answer": "Surface contact", "background": "Images/q6.png"},
+    {"question": "Which part of the cell controls activities?", "choices": ["Cytoplasm", "Nucleus", "Membrane", "Ribosome"], "answer": "Nucleus", "background": "Images/q7.png"},
+    {"question": "Which part of the brain controls voluntary actions?", "choices": ["Cerebellum", "Cerebrum", "Brainstem", "Neuron"], "answer": "Cerebrum", "background": "Images/q8.png"},
+    {"question": "In the Heisenberg uncertainty principle, position and momentum cannot be observed precisely at the same time?", "choices": ["Velocity and Acceleration", "Mass and Energy", "Position and Momentum", "Spin and Charge"], "answer": "Position and Momentum", "background": "Images/q9.png"},
+    {"question": "What is the main purpose of enzymes?","choices": ["Store energy", "Speed up reactions", "Carry oxygen", "Break bones"], "answer": "Speed up reactions", "background": "Images/q10.png"},
+    {"question": "What is the name of radiation emitted by black holes?", "choices": ["Synchrotron", "Hawking radiation", "Cherenkov", "Bremsstrahlung"], "answer": "Hawking radiation", "background": "Images/q11.png"},
+    {"question": "Which of the following is the SI unit of luminous intensity?", "choices": ["Lumen", "Lux", "Candela", "Watt"], "answer": "Candela", "background": "Images/q12.png"},
+    {"question": "What is the rarest naturally occurring element on Earth?", "choices": ["Uranium", "Astatine", "Francium", "Rhodium"], "answer": "Astatine", "background": "Images/q13.png"},
+    {"question": "Which protein maintains osmotic pressure in blood?", "choices": ["Gamma globulin", "Immunoglobulin", "Beta macroglobulin", "Albumin"], "answer": "Albumin", "background": "Images/q14.png"},
+    {"question": "What is the powerhouse of the cell?", "choices": ["Nucleus", "Mitochondria", "Ribosome", "Membrane"], "answer": "Mitochondria", "background": "Images/q15.png"}
 }
 pyglet.font.add_file("fonts/Fredoka.ttf") #Load the font file from folder
 pyglet.font.add_file("fonts/Agrandir.ttf")#Load the font file from folder
@@ -76,15 +75,15 @@ button.config(command=check_username) #check username for the function
 def open_next_window(): #create next window
     new_window = tk.Toplevel(root) #create a pop-up window
     new_window.title("Quiz Main Questions Page") #assign a name to window
-    new_window.geometry("1225x690")
-    new_window.resizable(False, False)
+    new_window.geometry("1225x690") #resize window
+    new_window.resizable(False, False) #make window unresizable
 
     bg_image = Image.open("Images/q1.png") #open background image for first question
     bg_photo = ImageTk.PhotoImage(bg_image) #convert image to a format tkinter can use
     bg_label = tk.Label(new_window, image=bg_photo) #create a label widget to display background image
     bg_label.image = bg_photo #reference image
     bg_label.place(x=0, y=0, relwidth=1, relheight=1)
-
+    #create a label to display question
     question_label = tk.Label(
         new_window,
         text="Question 1",
@@ -92,9 +91,9 @@ def open_next_window(): #create next window
         fg="black",
         bg="white",
     )
-
+    #place the label at an suitable coordinate
     question_label.place(x=285, y=35, width=600, height=80)
-
+    #create a progress label to display what question the user is currently at
     progress_label = tk.Label(
         new_window,
         text="1/30",
@@ -102,9 +101,9 @@ def open_next_window(): #create next window
         fg="black",
         bg="white"
     )
-
+    #place the label at an suitable coordinate
     progress_label.place(x=58, y=43, width=120, height=70)
-
+    #create a exit button
     exit_btn = tk.Button(
         new_window,
         text="QUIT",
@@ -114,9 +113,9 @@ def open_next_window(): #create next window
         relief="flat",
         cursor="hand2"
     )
-
+    #place the button at an suitable coordinate
     exit_btn.place(x=158, y=255, width=100, height=70)
-
+    #create a submit button
     submit_btn = tk.Button(
         new_window,
         text="SUBMIT",
@@ -126,9 +125,9 @@ def open_next_window(): #create next window
         relief="flat",
         cursor="hand2"
     )
-
+    #place the button at an suitable coordinate
     submit_btn.place(x=905, y=255, width=120, height=70)
-
+    #create first answer button
     answer1 = tk.Button(
         new_window,
         text="Answer 1",
@@ -138,9 +137,9 @@ def open_next_window(): #create next window
         relief="flat",
         cursor="hand2"
     )
-
+    #place the button  at an suitable coordinate
     answer1.place(x=202, y=416, width=322, height=58)
-
+    #create second answer button
     answer2 = tk.Button(
         new_window,
         text="Answer 2",
@@ -150,9 +149,9 @@ def open_next_window(): #create next window
         relief="flat",
         cursor="hand2"
     )
-
+    # place the button  at an suitable coordinate
     answer2.place(x=660, y=416, width=322, height=58)
-
+    #create third answer button
     answer3 = tk.Button(
         new_window,
         text="Answer 3",
@@ -162,9 +161,9 @@ def open_next_window(): #create next window
         relief="flat",
         cursor="hand2"
     )
-
+    # place the button  at an suitable coordinate
     answer3.place(x=202, y=567, width=322, height=58)
-
+    #create fourth answer button
     answer4 = tk.Button(
         new_window,
         text="Answer 4",
@@ -174,7 +173,7 @@ def open_next_window(): #create next window
         relief="flat",
         cursor="hand2"
     )
-
+    # place the button  at an suitable coordinate
     answer4.place(x=660, y=567, width=322, height=58)
 
 
