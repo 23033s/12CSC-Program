@@ -7,9 +7,9 @@ score = 0
 current_index=0
 all_questions= []
 selected_choice= ""
-#dictionary of difficulty of question, questions, answer choices, answers and background image for that question
-quiz_data = {
-    {"question": "What planet is known as the Red Planet?", "choices": ["Earth", "Mars", "Jupiter", "Venus"], "answer": "Mars", "background": "Images/q1.png"},
+#dictionary of questions, answer choices, answers and background image for that question
+quiz_data = [
+        {"question": "What planet is known as the Red Planet?", "choices": ["Earth", "Mars", "Jupiter", "Venus"], "answer": "Mars", "background": "Images/q1.png"},
     {"question": "What gas do humans need to breathe?", "choices": ["Carbon Dioxide", "Oxygen", "Nitrogen", "Hydrogen"], "answer": "Oxygen", "background": "Images/q2.png"},
     {"question": "Which organ pumps blood in the human body?", "choices": ["Brain", "Lungs", "Heart", "Kidney"],"answer": "Heart", "background": "Images/q3.png"},
     {"question": "Which state of matter has a fixed shape?", "choices": ["Liquid", "Gas", "Solid", "Plasma"], "answer": "Solid", "background": "Images/q4.png"},
@@ -24,7 +24,7 @@ quiz_data = {
     {"question": "What is the rarest naturally occurring element on Earth?", "choices": ["Uranium", "Astatine", "Francium", "Rhodium"], "answer": "Astatine", "background": "Images/q13.png"},
     {"question": "Which protein maintains osmotic pressure in blood?", "choices": ["Gamma globulin", "Immunoglobulin", "Beta macroglobulin", "Albumin"], "answer": "Albumin", "background": "Images/q14.png"},
     {"question": "What is the powerhouse of the cell?", "choices": ["Nucleus", "Mitochondria", "Ribosome", "Membrane"], "answer": "Mitochondria", "background": "Images/q15.png"}
-}
+]
 pyglet.font.add_file("fonts/Fredoka.ttf") #Load the font file from folder
 pyglet.font.add_file("fonts/Agrandir.ttf")#Load the font file from folder
 root = tk.Tk() #create intro window
