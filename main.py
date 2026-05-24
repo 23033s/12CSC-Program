@@ -94,7 +94,7 @@ button.config(command=check_username) #check username for the function
 
 #main window/questions window
 def open_next_window(): #create next window
-    global selected_choice
+    global selected_choice  #global variable
     new_window = tk.Toplevel(root) #create a pop-up window
     new_window.title("Quiz Main Questions Page") #assign a name to window
     new_window.geometry("1225x690") #resize window
@@ -114,6 +114,7 @@ def open_next_window(): #create next window
         font=("Fredoka", 50, "bold"), #font and size of the text and make text bold
         fg="black", #set text colour to back
         bg="white", #set label background colour to white
+        wraplength=800 #automatically break the text into a new line if it exceeds 800 pixels in width
     )
 
     #place the label at an suitable coordinate
@@ -139,7 +140,8 @@ def open_next_window(): #create next window
         fg="black", #set text colour to back
         bg="white", #set label background colour to white
         relief="flat",  #removes all 3D borders and shadowing from button
-        cursor="hand2"  #change cursor to hand to let users know this button is clickable
+        cursor="hand2",  #change cursor to hand to let users know this button is clickable
+        command = root.destroy #end code
     )
 
     #place the button at an suitable coordinate
@@ -167,7 +169,8 @@ def open_next_window(): #create next window
         fg="black", #set text colour to back
         bg="white", #set label background colour to white
         relief="flat",  #removes all 3D borders and shadowing from button
-        cursor="hand2"  #change cursor to hand to let users know this button is clickable
+        cursor="hand2",  #change cursor to hand to let users know this button is clickable
+        command = lambda: select_answer(answer1["text"]) #run the selected answer with the following def command
     )
 
     #place the button  at an suitable coordinate
@@ -181,7 +184,8 @@ def open_next_window(): #create next window
         fg="black", #set text colour to back
         bg="white", #set label background colour to white
         relief="flat",  #removes all 3D borders and shadowing from button
-        cursor="hand2"  #change cursor to hand to let users know this button is clickable
+        cursor="hand2",  #change cursor to hand to let users know this button is clickable
+        command = lambda: select_answer(answer2["text"]) #run the selected answer with the following def command
     )
 
     # place the button  at an suitable coordinate
@@ -195,7 +199,8 @@ def open_next_window(): #create next window
         fg="black", #set text colour to back
         bg="white", #set label background colour to white
         relief="flat",  #removes all 3D borders and shadowing from button
-        cursor="hand2"  #change cursor to hand to let users know this button is clickable
+        cursor="hand2",  #change cursor to hand to let users know this button is clickable
+        command = lambda: select_answer(answer3["text"]) #run the selected answer with the following def command
     )
 
     # place the button  at an suitable coordinate
@@ -209,11 +214,36 @@ def open_next_window(): #create next window
         fg="black", #set text colour to back
         bg="white", #set label background colour to white
         relief="flat",  #removes all 3D borders and shadowing from button
-        cursor="hand2"  #change cursor to hand to let users know this button is clickable
+        cursor="hand2",  #change cursor to hand to let users know this button is clickable
+        command = lambda: select_answer(answer4["text"]) #run the selected answer with the following def command
     )
 
     # place the button  at an suitable coordinate
     answer4.place(x=660, y=567, width=322, height=58)
+
+    # Answer Selection Function
+    def select_answer(choice):
+        global selected_choice      #global variable
+        selected_choice = choice    #global variable
+
+        # Reset colours
+        answer1.config(bg="white")  #set initial background colour of button to white
+        answer2.config(bg="white")  #set initial background colour of button to white
+        answer3.config(bg="white")  #set initial background colour of button to white
+        answer4.config(bg="white")  #set initial background colour of button to white
+
+        # Highlight selected choice
+        if choice == answer1["text"]:
+            answer1.config(bg="#D6D6D6")    #if user clicks answer 1 button, highlight the button gray
+
+        elif choice == answer2["text"]:
+            answer2.config(bg="#D6D6D6")    #if user clicks answer 2 button, highlight the button gray
+
+        elif choice == answer3["text"]:
+            answer3.config(bg="#D6D6D6")    #if user clicks answer 3 button, highlight the button gray
+
+        elif choice == answer4["text"]:
+            answer4.config(bg="#D6D6D6")    #if user clicks answer 4 button, highlight the button gray
 
 
 
