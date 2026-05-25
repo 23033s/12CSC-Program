@@ -1,4 +1,4 @@
-#importing tkinter, PIL, pyglet, messagebox, random, string to my program to use
+#importing tkinter, PIL, pyglet, messagebox, random and string to my program to use
 import tkinter as tk #import the main GUI library to my program
 from PIL import Image, ImageTk #import Pillow to handle images
 import pyglet #import pyglet to use custom font
@@ -145,7 +145,7 @@ def open_next_window(): #create next window
     )
 
     #place the button at an suitable coordinate
-    exit_btn.place(x=158, y=255, width=100, height=70)
+    exit_btn.place(x=148, y=255, width=120, height=70)
 
     #create a submit button
     submit_btn = tk.Button(     #name button
@@ -159,7 +159,7 @@ def open_next_window(): #create next window
     )
 
     #place the button at an suitable coordinate
-    submit_btn.place(x=905, y=255, width=120, height=70)
+    submit_btn.place(x=905, y=255, width=125, height=70)
 
     #create first answer button
     answer1 = tk.Button( #name answer button
@@ -174,7 +174,7 @@ def open_next_window(): #create next window
     )
 
     #place the button  at an suitable coordinate
-    answer1.place(x=202, y=416, width=322, height=58)
+    answer1.place(x=202, y=417, width=323, height=58)
 
     #create second answer button
     answer2 = tk.Button(    #name answer button
@@ -189,7 +189,7 @@ def open_next_window(): #create next window
     )
 
     # place the button  at an suitable coordinate
-    answer2.place(x=660, y=416, width=322, height=58)
+    answer2.place(x=660, y=417, width=323, height=58)
 
     #create third answer button
     answer3 = tk.Button(    #name answer button
@@ -204,7 +204,7 @@ def open_next_window(): #create next window
     )
 
     # place the button  at an suitable coordinate
-    answer3.place(x=202, y=567, width=322, height=58)
+    answer3.place(x=202, y=567, width=323, height=58)
 
     #create fourth answer button
     answer4 = tk.Button(    #name answer button
@@ -219,7 +219,7 @@ def open_next_window(): #create next window
     )
 
     # place the button  at an suitable coordinate
-    answer4.place(x=660, y=567, width=322, height=58)
+    answer4.place(x=660, y=567, width=323, height=58)
 
     # Answer Selection Function
     def select_answer(choice):
@@ -234,16 +234,30 @@ def open_next_window(): #create next window
 
         # Highlight selected choice
         if choice == answer1["text"]:
-            answer1.config(bg="#D6D6D6")    #if user clicks answer 1 button, highlight the button gray
+            answer1.config(bg="#708090")    #if user clicks answer 1 button, highlight the button gray
 
         elif choice == answer2["text"]:
-            answer2.config(bg="#D6D6D6")    #if user clicks answer 2 button, highlight the button gray
+            answer2.config(bg="#708090")    #if user clicks answer 2 button, highlight the button gray
 
         elif choice == answer3["text"]:
-            answer3.config(bg="#D6D6D6")    #if user clicks answer 3 button, highlight the button gray
+            answer3.config(bg="#708090")    #if user clicks answer 3 button, highlight the button gray
 
         elif choice == answer4["text"]:
-            answer4.config(bg="#D6D6D6")    #if user clicks answer 4 button, highlight the button gray
+            answer4.config(bg="#708090")    #if user clicks answer 4 button, highlight the button gray
+
+    #hover functions for buttons in new_window
+    def on_enter(event):
+        # Change background and text color on hover
+        event.widget.config(bg="#D6D6D6", fg="black")
+
+    def on_leave(event):
+        # Revert to original background and text color when not hovering
+        event.widget.config(bg="white", fg="black")
+    #bind all the buttons in the new_window and applying hover effects
+    for widget in new_window.winfo_children():
+        if isinstance(widget, tk.Button):
+             widget.bind("<Enter>", on_enter)
+             widget.bind("<Leave>", on_leave)
 
 
 
