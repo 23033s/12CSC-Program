@@ -170,7 +170,7 @@ def open_next_window(): #create next window
         bg="white", #set label background colour to white
         relief="flat",  #removes all 3D borders and shadowing from button
         cursor="hand2",  #change cursor to hand to let users know this button is clickable
-        command = lambda: select_answer(answer1["text"]) #run the selected answer with the following def command
+        command = lambda: select_answer(answer1["text"], answer1) #run the selected answer with the following def command
     )
 
     #place the button  at an suitable coordinate
@@ -185,7 +185,7 @@ def open_next_window(): #create next window
         bg="white", #set label background colour to white
         relief="flat",  #removes all 3D borders and shadowing from button
         cursor="hand2",  #change cursor to hand to let users know this button is clickable
-        command = lambda: select_answer(answer2["text"]) #run the selected answer with the following def command
+        command = lambda: select_answer(answer2["text"], answer2) #run the selected answer with the following def command
     )
 
     # place the button  at an suitable coordinate
@@ -200,7 +200,7 @@ def open_next_window(): #create next window
         bg="white", #set label background colour to white
         relief="flat",  #removes all 3D borders and shadowing from button
         cursor="hand2",  #change cursor to hand to let users know this button is clickable
-        command = lambda: select_answer(answer3["text"]) #run the selected answer with the following def command
+        command = lambda: select_answer(answer3["text"], answer3) #run the selected answer with the following def command
     )
 
     # place the button  at an suitable coordinate
@@ -215,16 +215,17 @@ def open_next_window(): #create next window
         bg="white", #set label background colour to white
         relief="flat",  #removes all 3D borders and shadowing from button
         cursor="hand2",  #change cursor to hand to let users know this button is clickable
-        command = lambda: select_answer(answer4["text"]) #run the selected answer with the following def command
+        command = lambda: select_answer(answer4["text"], answer4) #run the selected answer with the following def command
     )
 
     # place the button  at an suitable coordinate
     answer4.place(x=660, y=567, width=323, height=58)
 
     # Answer Selection Function
-    def select_answer(choice):
-        global selected_choice      #global variable
-        selected_choice = choice    #global variable
+    def select_answer(choice, clicked_button):
+        global selected_choice, current_selected_button   #keep track of choice and button selection
+        selected_choice = choice
+        current_selected_button = clicked_button #record what button was clicked
 
         # Reset colours
         answer1.config(bg="white")  #set initial background colour of button to white
@@ -232,27 +233,25 @@ def open_next_window(): #create next window
         answer3.config(bg="white")  #set initial background colour of button to white
         answer4.config(bg="white")  #set initial background colour of button to white
 
-        # Highlight selected choice
-        if choice == answer1["text"]:
-            answer1.config(bg="#708090")    #if user clicks answer 1 button, highlight the button gray
+        clicked_button.config(bg="#708090")
 
-        elif choice == answer2["text"]:
-            answer2.config(bg="#708090")    #if user clicks answer 2 button, highlight the button gray
-
-        elif choice == answer3["text"]:
-            answer3.config(bg="#708090")    #if user clicks answer 3 button, highlight the button gray
-
-        elif choice == answer4["text"]:
-            answer4.config(bg="#708090")    #if user clicks answer 4 button, highlight the button gray
+    current_selection = None    #Define the variable to prevent errors on startup before any button is clicked
 
     #hover functions for buttons in new_window
     def on_enter(event):
-        # Change background and text color on hover
-        event.widget.config(bg="#D6D6D6", fg="black")
+        global current_selected_button
+        # Only show light gray hover if the button is not  the selected one
+        if event.widget != current_selected_button:
+            event.widget.config(bg="#D6D6D6", fg="black")
 
     def on_leave(event):
-        # Revert to original background and text color when not hovering
-        event.widget.config(bg="white", fg="black")
+        global current_selection
+
+        global current_selected_button
+        # Only revert to white if the button is not the selected one
+        if event.widget != current_selected_button:
+            event.widget.config(bg="white", fg="black")
+
     #bind all the buttons in the new_window and applying hover effects
     for widget in new_window.winfo_children():
         if isinstance(widget, tk.Button):
