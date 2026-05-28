@@ -161,6 +161,9 @@ def open_next_window(): #create next window
     #place the button at an suitable coordinate
     submit_btn.place(x=905, y=255, width=125, height=70)
 
+    selected_choice = None #Define the variable to prevent errors on startup before any button is clicked
+    current_selected_button = None #Define the variable to prevent errors on startup before any button is clicked
+
     #create first answer button
     answer1 = tk.Button( #name answer button
         new_window, #put button in new_window
@@ -235,8 +238,6 @@ def open_next_window(): #create next window
 
         clicked_button.config(bg="#708090")
 
-    current_selection = None    #Define the variable to prevent errors on startup before any button is clicked
-
     #hover functions for buttons in new_window
     def on_enter(event):
         global current_selected_button
@@ -245,8 +246,6 @@ def open_next_window(): #create next window
             event.widget.config(bg="#D6D6D6", fg="black")
 
     def on_leave(event):
-        global current_selection
-
         global current_selected_button
         # Only revert to white if the button is not the selected one
         if event.widget != current_selected_button:
