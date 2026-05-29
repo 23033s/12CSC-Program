@@ -91,6 +91,7 @@ def check_username(): #function to check whether user enters a valid name
 username_entry = tk.Entry(root, font=("Arial", 15), bd=2.5, width=25) #create an entry box for users to enter their name
 username_entry.place(relx=0.5, rely=0.52, anchor="center") #position the box using coordinates and centre the box
 button.config(command=check_username) #check username for the function
+username_entry.bind('<Return>', lambda event: check_username())
 
 #main window/questions window
 def open_next_window(): #create next window
@@ -161,6 +162,7 @@ def open_next_window(): #create next window
     #place the button at an suitable coordinate
     submit_btn.place(x=905, y=255, width=125, height=70)
 
+    global selected_choice, current_selected_button
     selected_choice = None #Define the variable to prevent errors on startup before any button is clicked
     current_selected_button = None #Define the variable to prevent errors on startup before any button is clicked
 
