@@ -1,10 +1,10 @@
 #importing tkinter, PIL, pyglet, messagebox, random and string to my program to use
-import tkinter as tk #import the main GUI library to my program
-from PIL import Image, ImageTk #import Pillow to handle images
-import pyglet #import pyglet to use custom font
-from tkinter import messagebox
-import random
-import string
+import tkinter as tk    #import the main GUI library to my program
+from PIL import Image, ImageTk  #import Pillow to handle images
+import pyglet   #import pyglet to use custom font
+from tkinter import messagebox #import pop-up windows to use for error messages or info messages etc
+import random #generate random choices, numbers, shuffle sequences
+import string #load a standard Python library containing helpful string constants
 
 #Global variables for my quiz
 score = 0
@@ -51,7 +51,7 @@ label.pack() #place the label onto the window
 
 #start button
 start_button = tk.PhotoImage(file="Images/startbutton.png") #load start button image
-button = tk.Button(root, image=start_button, relief="flat",
+button = tk.Button(root, image=start_button, relief="flat", #put button in intro page, use the image of my start_button as the button and make the border of button have no 3D effect.
                    cursor="hand2",              #changes the cursor to a hand when reaches button
                    bg="#182156",                # Set colour to initial background colour
                    activebackground="#182156",  # Set colour active background colour to prevent flash when clicked
@@ -91,7 +91,7 @@ def check_username(): #function to check whether user enters a valid name
 username_entry = tk.Entry(root, font=("Arial", 15), bd=2.5, width=25) #create an entry box for users to enter their name
 username_entry.place(relx=0.5, rely=0.52, anchor="center") #position the box using coordinates and centre the box
 button.config(command=check_username) #check username for the function
-username_entry.bind('<Return>', lambda event: check_username())
+username_entry.bind('<Return>', lambda event: check_username()) #allow users to click enter on their keyboard when entering in a name
 
 #main window/questions window
 def open_next_window(): #create next window
@@ -112,10 +112,10 @@ def open_next_window(): #create next window
     question_label = tk.Label(  #name label
         new_window, #put label in new_window
         text="Question 1", #text
-        font=("Fredoka", 50, "bold"), #font and size of the text and make text bold
+        font=("Fredoka", 25, "bold"), #font and size of the text and make text bold
         fg="black", #set text colour to back
         bg="white", #set label background colour to white
-        wraplength=800 #automatically break the text into a new line if it exceeds 800 pixels in width
+        wraplength=600 #automatically break the text into a new line if it exceeds 600 pixels in width
     )
 
     #place the label at an suitable coordinate
@@ -227,7 +227,7 @@ def open_next_window(): #create next window
     answer4.place(x=660, y=567, width=323, height=58)
 
     # Answer Selection Function
-    def select_answer(choice, clicked_button):
+    def select_answer(choice, clicked_button):  #create def function
         global selected_choice, current_selected_button   #keep track of choice and button selection
         selected_choice = choice
         current_selected_button = clicked_button #record what button was clicked
@@ -259,7 +259,27 @@ def open_next_window(): #create next window
              widget.bind("<Enter>", on_enter)
              widget.bind("<Leave>", on_leave)
 
+    #Put the questions, answer choices and background onto the page
+    def load_question():
+        global current_index
+        question = quiz_data[current_index] #load question from dictionary
 
+        question_label.config(text=question["question"]) # Update question text for my question label
+        answer1.config(text=question["choices"][0])  # Update answer buttons
+        answer2.config(text=question["choices"][1])  # Update answer buttons
+        answer3.config(text=question["choices"][2])  # Update answer buttons
+        answer4.config(text=question["choices"][3])  # Update answer buttons
+
+    progress_label.config( #adjust progress label
+        text=f"{current_index + 1}/{len(quiz_data)}" ) # Update progress label for each question
+
+    #Update background image for each question
+    new_bg = Image.open(question["background"])
+    new_bg_photo = ImageTk.PhotoImage(new_bg)
+    bg_label.config(image=new_bg_photo)
+    bg_label.image = new_bg_photo
+
+    load_question()
 
     root.withdraw() #hide the window
 
