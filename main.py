@@ -156,7 +156,8 @@ def open_next_window(): #create next window
         fg="black", #set text colour to back
         bg="white", #set label background colour to white
         relief="flat",  #removes all 3D borders and shadowing from button
-        cursor="hand2"  #change cursor to hand to let users know this button is clickable
+        cursor="hand2",  #change cursor to hand to let users know this button is clickable
+        command=submit_answer
     )
 
     #place the button at an suitable coordinate
@@ -179,7 +180,7 @@ def open_next_window(): #create next window
     )
 
     #place the button  at an suitable coordinate
-    answer1.place(x=202, y=417, width=323, height=58)
+    answer1.place(x=202, y=416, width=325, height=59)
 
     #create second answer button
     answer2 = tk.Button(    #name answer button
@@ -194,7 +195,7 @@ def open_next_window(): #create next window
     )
 
     # place the button  at an suitable coordinate
-    answer2.place(x=660, y=417, width=323, height=58)
+    answer2.place(x=661, y=416, width=325, height=59)
 
     #create third answer button
     answer3 = tk.Button(    #name answer button
@@ -209,7 +210,7 @@ def open_next_window(): #create next window
     )
 
     # place the button  at an suitable coordinate
-    answer3.place(x=202, y=567, width=323, height=58)
+    answer3.place(x=202, y=567, width=325, height=58)
 
     #create fourth answer button
     answer4 = tk.Button(    #name answer button
@@ -224,7 +225,7 @@ def open_next_window(): #create next window
     )
 
     # place the button  at an suitable coordinate
-    answer4.place(x=660, y=567, width=323, height=58)
+    answer4.place(x=661, y=567, width=324, height=58)
 
     # Answer Selection Function
     def select_answer(choice, clicked_button):  #create def function
@@ -263,23 +264,53 @@ def open_next_window(): #create next window
     def load_question():
         global current_index
         question = quiz_data[current_index] #load question from dictionary
-
         question_label.config(text=question["question"]) # Update question text for my question label
         answer1.config(text=question["choices"][0])  # Update answer buttons
         answer2.config(text=question["choices"][1])  # Update answer buttons
         answer3.config(text=question["choices"][2])  # Update answer buttons
         answer4.config(text=question["choices"][3])  # Update answer buttons
 
-    progress_label.config( #adjust progress label
+        progress_label.config( #adjust progress label
         text=f"{current_index + 1}/{len(quiz_data)}" ) # Update progress label for each question
 
-    #Update background image for each question
-    new_bg = Image.open(question["background"])
-    new_bg_photo = ImageTk.PhotoImage(new_bg)
-    bg_label.config(image=new_bg_photo)
-    bg_label.image = new_bg_photo
+        #Update background image for each question
+        new_bg = Image.open(question["background"]) #use the Pillow library (PIL) to load image and fetch questions in the dictionary
+        new_bg_photo = ImageTk.PhotoImage(new_bg) #Converts the Pillow image into a PhotoImage object ( a format Tk can use)
+        bg_label.config(image=new_bg_photo) #Changes the image property of an existing label named bg_label so now image instantly appears on screen
+        bg_label.image = new_bg_photo #keep reference of image
 
-    load_question()
+    def submit_answer():
+        global current_index
+        global score
+        global selected_choice
+
+        # Make sure an answer was chosen
+        if selected_choice is None:
+            messagebox.showwarning(
+                "No Answer Selected",
+                "Please select an answer first."
+            )
+            return
+
+        # Check answer
+        correct_answer = quiz_data[current_index]["answer"]
+        if selected_choice == correct_answer:
+            score += 1
+
+        # Next question
+        current_index += 1
+
+        # Reset selection
+        selected_choice = None
+
+        # Reset selection
+        selected_choice = None
+
+        # Quiz finished?
+        if current_index >= len(quiz_data):
+            new_window.destroy()
+        else:
+            load_question()
 
     root.withdraw() #hide the window
 
