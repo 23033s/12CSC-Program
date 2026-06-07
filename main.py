@@ -148,21 +148,6 @@ def open_next_window(): #create next window
     #place the button at an suitable coordinate
     exit_btn.place(x=148, y=255, width=120, height=70)
 
-    #create a submit button
-    submit_btn = tk.Button(     #name button
-        new_window, #put button in new_window
-        text="SUBMIT",  #text
-        font=("Fredoka", 25, "bold"),   #font and size of the text and make text bold
-        fg="black", #set text colour to back
-        bg="white", #set label background colour to white
-        relief="flat",  #removes all 3D borders and shadowing from button
-        cursor="hand2",  #change cursor to hand to let users know this button is clickable
-        command=submit_answer
-    )
-
-    #place the button at an suitable coordinate
-    submit_btn.place(x=905, y=255, width=125, height=70)
-
     global selected_choice, current_selected_button
     selected_choice = None #Define the variable to prevent errors on startup before any button is clicked
     current_selected_button = None #Define the variable to prevent errors on startup before any button is clicked
@@ -285,12 +270,12 @@ def open_next_window(): #create next window
         global selected_choice
 
         # Make sure an answer was chosen
-        if selected_choice is None:
-            messagebox.showwarning(
-                "No Answer Selected",
-                "Please select an answer first."
+        if selected_choice is None: #if user doesn't select an button
+            messagebox.showwarning( #create a warning box
+                "You have not selected an Answer",   #text of title
+                "Please select an answer first before submitting, even if it is just a guess :)"   #message telling user to select an answer
             )
-            return
+            return #return back
 
         # Check answer
         correct_answer = quiz_data[current_index]["answer"]
@@ -309,9 +294,25 @@ def open_next_window(): #create next window
         # Quiz finished?
         if current_index >= len(quiz_data):
             new_window.destroy()
+
         else:
             load_question()
+    #create a submit button
+    submit_btn = tk.Button(     #name button
+        new_window, #put button in new_window
+        text="SUBMIT",  #text
+        font=("Fredoka", 25, "bold"),   #font and size of the text and make text bold
+        fg="black", #set text colour to back
+        bg="white", #set label background colour to white
+        relief="flat",  #removes all 3D borders and shadowing from button
+        cursor="hand2",  #change cursor to hand to let users know this button is clickable
+        command=submit_answer
+    )
 
+    #place the button at an suitable coordinate
+    submit_btn.place(x=905, y=255, width=125, height=70)
+
+    load_question()
     root.withdraw() #hide the window
 
 root.mainloop() #run the loop to keep window open
