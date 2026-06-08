@@ -22,7 +22,7 @@ quiz_data = [
     {"question": "What is friction mainly caused by?", "choices": ["Gravity", "Surface contact", "Magnetism", "Light"], "answer": "Surface contact", "background": "Images/q6.png"},
     {"question": "Which part of the cell controls activities?", "choices": ["Cytoplasm", "Nucleus", "Membrane", "Ribosome"], "answer": "Nucleus", "background": "Images/q7.png"},
     {"question": "Which part of the brain controls voluntary actions?", "choices": ["Cerebellum", "Cerebrum", "Brainstem", "Neuron"], "answer": "Cerebrum", "background": "Images/q8.png"},
-    {"question": "In the Heisenberg uncertainty principle, position and momentum cannot be observed precisely at the same time?", "choices": ["Velocity and Acceleration", "Mass and Energy", "Position and Momentum", "Spin and Charge"], "answer": "Position and Momentum", "background": "Images/q9.png"},
+    {"question": "Which energy transformation occurs in a moving car?", "choices": ["Chemical → kinetic", "Kinetic → chemical", "Thermal → light", "Light → sound"], "answer": "Chemical → kinetic", "background": "Images/q9.png"},
     {"question": "What is the main purpose of enzymes?","choices": ["Store energy", "Speed up reactions", "Carry oxygen", "Break bones"], "answer": "Speed up reactions", "background": "Images/q10.png"},
     {"question": "What is the name of radiation emitted by black holes?", "choices": ["Synchrotron", "Hawking radiation", "Cherenkov", "Bremsstrahlung"], "answer": "Hawking radiation", "background": "Images/q11.png"},
     {"question": "Which of the following is the SI unit of luminous intensity?", "choices": ["Lumen", "Lux", "Candela", "Watt"], "answer": "Candela", "background": "Images/q12.png"},
@@ -124,8 +124,8 @@ def open_next_window(): #create next window
     #create a progress label to display what question the user is currently at
     progress_label = tk.Label(  #name label
         new_window, #put label in new_window
-        text="1/30", #text of progress
-        font=("Fredoka", 42, "bold"),   #font and size of the text and make text bold
+        text=f"1/{len(quiz_data)}", #text of progress
+        font=("Fredoka", 35, "bold"),   #font and size of the text and make text bold
         fg="black", #set text colour to back
         bg="white"  #set label background colour to white
     )
@@ -226,29 +226,19 @@ def open_next_window(): #create next window
 
         clicked_button.config(bg="#708090")
 
-    #hover functions for buttons in new_window
-    def on_enter(event):
-        global current_selected_button
-        # Only show light gray hover if the button is not  the selected one
-        if event.widget != current_selected_button:
-            event.widget.config(bg="#D6D6D6", fg="black")
-
-    def on_leave(event):
-        global current_selected_button
-        # Only revert to white if the button is not the selected one
-        if event.widget != current_selected_button:
-            event.widget.config(bg="white", fg="black")
-
-    #bind all the buttons in the new_window and applying hover effects
-    for widget in new_window.winfo_children():
-        if isinstance(widget, tk.Button):
-             widget.bind("<Enter>", on_enter)
-             widget.bind("<Leave>", on_leave)
-
     #Put the questions, answer choices and background onto the page
     def load_question():
         global current_index
         question = quiz_data[current_index] #load question from dictionary
+        global current_selected_button
+
+        current_selected_button = None
+
+        answer1.config(bg="white")
+        answer2.config(bg="white")
+        answer3.config(bg="white")
+        answer4.config(bg="white")
+
         question_label.config(text=question["question"]) # Update question text for my question label
         answer1.config(text=question["choices"][0])  # Update answer buttons
         answer2.config(text=question["choices"][1])  # Update answer buttons
@@ -288,9 +278,6 @@ def open_next_window(): #create next window
         # Reset selection
         selected_choice = None
 
-        # Reset selection
-        selected_choice = None
-
         # Quiz finished?
         if current_index >= len(quiz_data):
             new_window.destroy()
@@ -311,6 +298,25 @@ def open_next_window(): #create next window
 
     #place the button at an suitable coordinate
     submit_btn.place(x=905, y=255, width=125, height=70)
+
+    # hover functions for buttons in new_window
+    def on_enter(event):
+        global current_selected_button
+        # Only show light gray hover if the button is not  the selected one
+        if event.widget != current_selected_button:
+            event.widget.config(bg="#D6D6D6", fg="black")
+
+    def on_leave(event):
+        global current_selected_button
+        # Only revert to white if the button is not the selected one
+        if event.widget != current_selected_button:
+            event.widget.config(bg="white", fg="black")
+
+    # bind all the buttons in the new_window and applying hover effects
+    for widget in new_window.winfo_children():
+        if isinstance(widget, tk.Button):
+            widget.bind("<Enter>", on_enter)
+            widget.bind("<Leave>", on_leave)
 
     load_question()
     root.withdraw() #hide the window
