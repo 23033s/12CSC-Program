@@ -15,16 +15,16 @@ selected_choice= ""
 #dictionary of questions, answer choices, answers and background image for that question
 quiz_data = [
     {"question": "What planet is known as the Red Planet?", "choices": ["Earth", "Mars", "Jupiter", "Venus"], "answer": "Mars", "background": "Images/q1.png"},
-    {"question": "What gas do humans need to breathe?", "choices": ["Carbon Dioxide", "Oxygen", "Nitrogen", "Hydrogen"], "answer": "Oxygen", "background": "Images/q2.png"},
+    {"question": "What gas do humans need to breathe?", "choices": ["Carbon Dioxide", "Hydrogen", "Nitrogen", "Oxygen"], "answer": "Oxygen", "background": "Images/q2.png"},
     {"question": "Which organ pumps blood in the human body?", "choices": ["Brain", "Lungs", "Heart", "Kidney"],"answer": "Heart", "background": "Images/q3.png"},
-    {"question": "Which state of matter has a fixed shape?", "choices": ["Liquid", "Gas", "Solid", "Plasma"], "answer": "Solid", "background": "Images/q4.png"},
-    {"question": "Which blood cell carries oxygen?", "choices": ["White blood cells", "Red blood cells", "Platelets", "Plasma"], "answer": "Red blood cells", "background": "Images/q5.png"},
+    {"question": "Which state of matter has a fixed shape?", "choices": ["Liquid", "Gas", "Plasma", "Solid"], "answer": "Solid", "background": "Images/q4.png"},
+    {"question": "Which blood cell carries oxygen?", "choices": ["Red blood cells", "White blood cells", "Platelets", "Plasma"], "answer": "Red blood cells", "background": "Images/q5.png"},
     {"question": "What is friction mainly caused by?", "choices": ["Gravity", "Surface contact", "Magnetism", "Light"], "answer": "Surface contact", "background": "Images/q6.png"},
     {"question": "Which part of the cell controls activities?", "choices": ["Cytoplasm", "Nucleus", "Membrane", "Ribosome"], "answer": "Nucleus", "background": "Images/q7.png"},
-    {"question": "Which part of the brain controls voluntary actions?", "choices": ["Cerebellum", "Cerebrum", "Brainstem", "Neuron"], "answer": "Cerebrum", "background": "Images/q8.png"},
+    {"question": "Which part of the brain controls voluntary actions?", "choices": ["Cerebellum", "Neuron", "Brainstem", "Cerebrum"], "answer": "Cerebrum", "background": "Images/q8.png"},
     {"question": "Which energy transformation occurs in a moving car?", "choices": ["Chemical → kinetic", "Kinetic → chemical", "Thermal → light", "Light → sound"], "answer": "Chemical → kinetic", "background": "Images/q9.png"},
     {"question": "What is the main purpose of enzymes?","choices": ["Store energy", "Speed up reactions", "Carry oxygen", "Break bones"], "answer": "Speed up reactions", "background": "Images/q10.png"},
-    {"question": "What is the name of radiation emitted by black holes?", "choices": ["Synchrotron", "Hawking radiation", "Cherenkov", "Bremsstrahlung"], "answer": "Hawking radiation", "background": "Images/q11.png"},
+    {"question": "What is the name of radiation emitted by black holes?", "choices": ["Synchrotron", "Cherenkov", "Hawking radiation", "Bremsstrahlung"], "answer": "Hawking radiation", "background": "Images/q11.png"},
     {"question": "Which of the following is the SI unit of luminous intensity?", "choices": ["Lumen", "Lux", "Candela", "Watt"], "answer": "Candela", "background": "Images/q12.png"},
     {"question": "What is the rarest naturally occurring element on Earth?", "choices": ["Uranium", "Astatine", "Francium", "Rhodium"], "answer": "Astatine", "background": "Images/q13.png"},
     {"question": "Which protein maintains osmotic pressure in blood?", "choices": ["Gamma globulin", "Immunoglobulin", "Beta macroglobulin", "Albumin"], "answer": "Albumin", "background": "Images/q14.png"},
@@ -215,7 +215,7 @@ def open_next_window(): #create next window
     # Answer Selection Function
     def select_answer(choice, clicked_button):  #create def function
         global selected_choice, current_selected_button   #keep track of choice and button selection
-        selected_choice = choice
+        selected_choice = choice   #name selected_choice
         current_selected_button = clicked_button #record what button was clicked
 
         # Reset colours
@@ -224,7 +224,7 @@ def open_next_window(): #create next window
         answer3.config(bg="white")  #set initial background colour of button to white
         answer4.config(bg="white")  #set initial background colour of button to white
 
-        clicked_button.config(bg="#708090")
+        clicked_button.config(bg="#708090") #change colour of button when clicked
 
     #Put the questions, answer choices and background onto the page
     def load_question():
@@ -232,12 +232,12 @@ def open_next_window(): #create next window
         question = quiz_data[current_index] #load question from dictionary
         global current_selected_button
 
-        current_selected_button = None
+        current_selected_button = None  #set current selected button as none
 
-        answer1.config(bg="white")
-        answer2.config(bg="white")
-        answer3.config(bg="white")
-        answer4.config(bg="white")
+        answer1.config(bg="white")  #reset colour of button
+        answer2.config(bg="white")  #reset colour of button
+        answer3.config(bg="white")  #reset colour of button
+        answer4.config(bg="white")  #reset colour of button
 
         question_label.config(text=question["question"]) # Update question text for my question label
         answer1.config(text=question["choices"][0])  # Update answer buttons
@@ -253,37 +253,38 @@ def open_next_window(): #create next window
         new_bg_photo = ImageTk.PhotoImage(new_bg) #Converts the Pillow image into a PhotoImage object ( a format Tk can use)
         bg_label.config(image=new_bg_photo) #Changes the image property of an existing label named bg_label so now image instantly appears on screen
         bg_label.image = new_bg_photo #keep reference of image
-
-    def submit_answer():
+    #function for submitting answer
+    def submit_answer():    #create def function
         global current_index
         global score
         global selected_choice
 
-        # Make sure an answer was chosen
+        # Make sure an answer was chosen through error box
         if selected_choice is None: #if user doesn't select an button
-            messagebox.showwarning( #create a warning box
+            messagebox.showwarning( #create an error box
                 "You have not selected an Answer",   #text of title
                 "Please select an answer first before submitting, even if it is just a guess :)"   #message telling user to select an answer
             )
             return #return back
 
         # Check answer
-        correct_answer = quiz_data[current_index]["answer"]
-        if selected_choice == correct_answer:
-            score += 1
+        correct_answer = quiz_data[current_index]["answer"] #check answer from dictionary
+        if selected_choice == correct_answer:   #check if the selected answer from user matches the correct answer
+            score += 1  #add a point
 
         # Next question
-        current_index += 1
+        current_index += 1  #add 1 to index for progress
 
         # Reset selection
-        selected_choice = None
+        selected_choice = None  #reset selected choice
 
-        # Quiz finished?
-        if current_index >= len(quiz_data):
-            new_window.destroy()
+        # Check if quiz is done
+        if current_index >= len(quiz_data): #check if all questions were asked in the dictionary
+            new_window.destroy()    #close new window
 
-        else:
-            load_question()
+        else:   #else
+            load_question() #otherwise load next question
+
     #create a submit button
     submit_btn = tk.Button(     #name button
         new_window, #put button in new_window
@@ -300,13 +301,13 @@ def open_next_window(): #create next window
     submit_btn.place(x=905, y=255, width=125, height=70)
 
     # hover functions for buttons in new_window
-    def on_enter(event):
+    def on_enter(event):    #create def function for when user hovers over a button
         global current_selected_button
         # Only show light gray hover if the button is not  the selected one
         if event.widget != current_selected_button:
             event.widget.config(bg="#D6D6D6", fg="black")
 
-    def on_leave(event):
+    def on_leave(event):    #create def function for when user hovers away from a button
         global current_selected_button
         # Only revert to white if the button is not the selected one
         if event.widget != current_selected_button:
