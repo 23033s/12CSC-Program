@@ -10,7 +10,7 @@ import string #load a standard Python library containing helpful string constant
 score = 0
 current_index=0
 all_questions= []
-selected_choice= ""
+selected_choice= None
 
 #dictionary of questions, answer choices, answers and background image for that question
 quiz_data = [
@@ -56,6 +56,7 @@ button = tk.Button(root, image=start_button, relief="flat", #put button in intro
                    bg="#182156",                # Set colour to initial background colour
                    activebackground="#182156",  # Set colour active background colour to prevent flash when clicked
                    highlightthickness=0)        # Remove focus highlight around button
+
 button.place(relx=0.5, rely=0.69, anchor="center") #position the button using coordinates and centre the button
 
 #give button hover effects
@@ -95,13 +96,16 @@ username_entry.bind('<Return>', lambda event: check_username()) #allow users to 
 
 #main window/questions window
 def open_next_window(): #create next window
-    global selected_choice  #global variable
+    global selected_choice  #global variable to keep track of selected_choice
+    global current_index, score #global variable to keep track of current question number and score
+    current_index = 0 #Reset the current question number back to 0
+    score = 0 #reset score back to 0
     new_window = tk.Toplevel(root) #create a pop-up window
     new_window.title("Quiz Main Questions Page") #assign a name to window
     new_window.geometry("1225x690") #resize window
     new_window.resizable(False, False) #make window unresizable
 
-    #background
+    #background for questions page
     bg_image = Image.open("Images/q1.png") #open background image for first question
     bg_photo = ImageTk.PhotoImage(bg_image) #convert image to a format tkinter can use
     bg_label = tk.Label(new_window, image=bg_photo) #create a label widget to display background image
@@ -112,7 +116,7 @@ def open_next_window(): #create next window
     question_label = tk.Label(  #name label
         new_window, #put label in new_window
         text="Question 1", #text
-        font=("Fredoka", 25, "bold"), #font and size of the text and make text bold
+        font=("Fredoka", 28, "bold"), #font and size of the text and make text bold
         fg="black", #set text colour to back
         bg="white", #set label background colour to white
         wraplength=600 #automatically break the text into a new line if it exceeds 600 pixels in width
@@ -148,7 +152,7 @@ def open_next_window(): #create next window
     #place the button at an suitable coordinate
     exit_btn.place(x=148, y=255, width=120, height=70)
 
-    global selected_choice, current_selected_button
+    global selected_choice, current_selected_button #keep track of selected_choice and current_selected_button
     selected_choice = None #Define the variable to prevent errors on startup before any button is clicked
     current_selected_button = None #Define the variable to prevent errors on startup before any button is clicked
 
@@ -164,7 +168,7 @@ def open_next_window(): #create next window
         command = lambda: select_answer(answer1["text"], answer1) #run the selected answer with the following def command
     )
 
-    #place the button  at an suitable coordinate
+    #place the button at an suitable coordinate
     answer1.place(x=202, y=416, width=325, height=59)
 
     #create second answer button
@@ -227,24 +231,30 @@ def open_next_window(): #create next window
         clicked_button.config(bg="#708090") #change colour of button when clicked
 
     #Put the questions, answer choices and background onto the page
-    def load_question():
-        global current_index
+    def load_question():    #create def function
+        global current_index    #keep track of current question number
         question = quiz_data[current_index] #load question from dictionary
-        global current_selected_button
-
+        global current_selected_button  #keep track of current_selected_button
         current_selected_button = None  #set current selected button as none
 
+        #shuffle choices around
+        choices = question["choices"][:]
+        random.shuffle(choices)
+
+        #answer button colour
         answer1.config(bg="white")  #reset colour of button
         answer2.config(bg="white")  #reset colour of button
         answer3.config(bg="white")  #reset colour of button
         answer4.config(bg="white")  #reset colour of button
 
+        #update question lagel and the four answer buttons
         question_label.config(text=question["question"]) # Update question text for my question label
         answer1.config(text=question["choices"][0])  # Update answer buttons
         answer2.config(text=question["choices"][1])  # Update answer buttons
         answer3.config(text=question["choices"][2])  # Update answer buttons
         answer4.config(text=question["choices"][3])  # Update answer buttons
 
+        #progress change
         progress_label.config( #adjust progress label
         text=f"{current_index + 1}/{len(quiz_data)}" ) # Update progress label for each question
 
@@ -253,6 +263,7 @@ def open_next_window(): #create next window
         new_bg_photo = ImageTk.PhotoImage(new_bg) #Converts the Pillow image into a PhotoImage object ( a format Tk can use)
         bg_label.config(image=new_bg_photo) #Changes the image property of an existing label named bg_label so now image instantly appears on screen
         bg_label.image = new_bg_photo #keep reference of image
+
     #function for submitting answer
     def submit_answer():    #create def function
         global current_index
@@ -281,7 +292,7 @@ def open_next_window(): #create next window
         # Check if quiz is done
         if current_index >= len(quiz_data): #check if all questions were asked in the dictionary
             new_window.destroy()    #close new window
-
+            show_results()  #go to results page
         else:   #else
             load_question() #otherwise load next question
 
@@ -294,7 +305,7 @@ def open_next_window(): #create next window
         bg="white", #set label background colour to white
         relief="flat",  #removes all 3D borders and shadowing from button
         cursor="hand2",  #change cursor to hand to let users know this button is clickable
-        command=submit_answer
+        command=submit_answer   #run the command of a submit button
     )
 
     #place the button at an suitable coordinate
@@ -305,21 +316,50 @@ def open_next_window(): #create next window
         global current_selected_button
         # Only show light gray hover if the button is not  the selected one
         if event.widget != current_selected_button:
-            event.widget.config(bg="#D6D6D6", fg="black")
+            event.widget.config(bg="#D6D6D6", fg="black")   #change colour
 
     def on_leave(event):    #create def function for when user hovers away from a button
         global current_selected_button
         # Only revert to white if the button is not the selected one
         if event.widget != current_selected_button:
-            event.widget.config(bg="white", fg="black")
+            event.widget.config(bg="white", fg="black") #change colour
 
     # bind all the buttons in the new_window and applying hover effects
     for widget in new_window.winfo_children():
-        if isinstance(widget, tk.Button):
-            widget.bind("<Enter>", on_enter)
-            widget.bind("<Leave>", on_leave)
+        if isinstance(widget, tk.Button):   #if it is a widget or button
+            widget.bind("<Enter>", on_enter)    #bind button
+            widget.bind("<Leave>", on_leave)    #bind button
 
-    load_question()
+    load_question() #load question
+
+    #End page (win or lose)
+    def show_results(): #create def function
+        result_window = tk.Toplevel(root)   #create a pop-up window
+        result_window.title("Results Page") #create title
+        result_window.geometry("1225x690")  #resize window
+        result_window.resizable(False, False) #make window unresizeable
+
+        #Opening background
+        if score >= 10: #if user scores 10 or more
+            image = Image.open("Images/winpage.png")    #open win page
+        else:   #otherwise
+            image = Image.open("Images/losepage.png")   #open lose page
+
+        photo = ImageTk.PhotoImage(image)   #convert image to a format tkinter can use
+        label = tk.Label(result_window, image=photo)    #create a label widget to display background image
+        label.image = photo #keep reference of image
+        label.pack()
+
+        #show user their score
+        score_label = tk.Label( #create label
+            result_window,  #place in result_window
+            text=f"{score}/{len(quiz_data)}",   #text
+            font=("Fredoka", 25, "bold")    #font, font size, make bold
+        )
+
+        #place label at an suitable coordinate
+        score_label.place(relx=0.4, rely=0.7, anchor="center")
+
     root.withdraw() #hide the window
 
 root.mainloop() #run the loop to keep window open
