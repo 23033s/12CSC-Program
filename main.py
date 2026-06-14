@@ -9,7 +9,6 @@ import string #load a standard Python library containing helpful string constant
 #Global variables for my quiz
 score = 0
 current_index=0
-all_questions= []
 selected_choice= None
 
 #dictionary of questions, answer choices, answers and background image for that question
@@ -86,6 +85,7 @@ def check_username(): #function to check whether user enters a valid name
         outcome_label.config(text="No special characters allowed", fg="red") #show red error message telling users they can't have special characters in their name
     else:
         outcome_label.config(text=f"Welcome to the quiz, {username}!", fg="green") #welcome users in green if user enters a valid name
+        button.config(command=lambda: None) #disables the button after the user has clicked it once to prevent multiple new windows from opening.
         root.after(1750, open_next_window) #wait 1.75 seconds before heading to next window
 
 #create username entry box
@@ -237,9 +237,13 @@ def open_next_window(): #create next window
         global current_selected_button  #keep track of current_selected_button
         current_selected_button = None  #set current selected button as none
 
-        #shuffle choices around
+        #shuffle choices around to prevent users from just memorising which button contains the answers if they were to play the quiz again
         choices = question["choices"][:]
         random.shuffle(choices)
+        answer1.config(text=choices[0])
+        answer2.config(text=choices[1])
+        answer3.config(text=choices[2])
+        answer4.config(text=choices[3])
 
         #answer button colour
         answer1.config(bg="white")  #reset colour of button
@@ -354,11 +358,15 @@ def open_next_window(): #create next window
         score_label = tk.Label( #create label
             result_window,  #place in result_window
             text=f"{score}/{len(quiz_data)}",   #text
-            font=("Fredoka", 25, "bold")    #font, font size, make bold
+            font=("Fredoka", 40, "bold"),    #font, font size, make bold
+            bg="white",
+            activebackground = "#182156",
+            highlightthickness = 0,
+            relief="flat"
         )
 
         #place label at an suitable coordinate
-        score_label.place(relx=0.4, rely=0.7, anchor="center")
+        score_label.place(relx=0.45, rely=0.67, anchor="center", width=125, height=70)
 
     root.withdraw() #hide the window
 
