@@ -344,7 +344,7 @@ def open_next_window(): #create next window
         result_window.resizable(False, False) #make window unresizeable
 
         #Opening background
-        if score >= 10: #if user scores 10 or more
+        if score >= 9: #if user scores 9 or more
             image = Image.open("Images/winpage.png")    #open win page
         else:   #otherwise
             image = Image.open("Images/losepage.png")   #open lose page
@@ -352,21 +352,21 @@ def open_next_window(): #create next window
         photo = ImageTk.PhotoImage(image)   #convert image to a format tkinter can use
         label = tk.Label(result_window, image=photo)    #create a label widget to display background image
         label.image = photo #keep reference of image
-        label.pack()
+        label.pack()    #postions and displays image
 
         #show user their score
         score_label = tk.Label( #create label
             result_window,  #place in result_window
             text=f"{score}/{len(quiz_data)}",   #text
             font=("Fredoka", 40, "bold"),    #font, font size, make bold
-            bg="white",
-            activebackground = "#182156",
-            highlightthickness = 0,
-            relief="flat"
+            bg="white", #set background to white
+            activebackground = "#182156",   #set active background to dark blue
+            highlightthickness = 0, #remove highlight thickness
+            relief="flat"   #   #removes all 3D borders and shadowing from button
         )
 
         #place label at an suitable coordinate
-        score_label.place(relx=0.45, rely=0.67, anchor="center", width=125, height=70)
+        score_label.place(relx=0.45, rely=0.66, anchor="center", width=125, height=70)
 
     root.withdraw() #hide the window
 
