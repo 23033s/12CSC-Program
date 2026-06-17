@@ -216,6 +216,18 @@ def open_next_window(): #create next window
     # place the button  at an suitable coordinate
     answer4.place(x=661, y=567, width=324, height=58)
 
+    #create a pop up to help users better understand how quiz works
+    def helpbox():   #create def function
+        messagebox.showinfo(    #cre
+            "Quiz Info",  # text of title
+            "e"
+            
+            "e"
+            
+            "e"
+        )
+        return()
+
     # Answer Selection Function
     def select_answer(choice, clicked_button):  #create def function
         global selected_choice, current_selected_button   #keep track of choice and button selection
@@ -367,6 +379,12 @@ def open_next_window(): #create next window
 
         #place label at an suitable coordinate
         score_label.place(relx=0.45, rely=0.66, anchor="center", width=125, height=70)
+
+        end_label = tk.Label(
+            result_window,
+            text= f"Congrats {username}, you have passed the test"
+        )
+        end_label.place(x=202, y=416, width=325, height=59)
 
     root.withdraw() #hide the window
 
