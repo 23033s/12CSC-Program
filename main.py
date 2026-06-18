@@ -218,15 +218,23 @@ def open_next_window(): #create next window
 
     #create a pop up to help users better understand how quiz works
     def helpbox():   #create def function
-        messagebox.showinfo(    #cre
-            "Quiz Info",  # text of title
-            "e"
-            
-            "e"
-            
-            "e"
-        )
-        return()
+        messagebox.showinfo(    #create  info messagebox
+            "Quiz Info\n\n",  # text of title
+                    "- Welcome to my Science Quiz!\n\n" #messages
+            "- For each question, select one answer from the 4 answer choices.\n\n" #messages
+            "- Press the next button to submit your answer and move on to the next page\n\n" #messages
+            "- You cannot change your answer after it has been submited\n\n" #messages
+            "- There are 15 questions in total\n\n" #messages
+            "- You need to get at least 9 out of 10 questions correct to pass the quiz\n" #messages
+            "- Good luck and have fun learning new things!\n"),#messages
+
+
+        return()   #return
+    #Info button
+    info_button = tk.PhotoImage(file="Images/info.png")  #convert image to a format so that tkinter can use
+    button = tk.Button(new_window, image=info_button, cursor="hand2", command=helpbox)    #crate button using tkinter, place it in new window, make it look clickable and link to helpbox pop-up
+    button.image = info_button #name image
+    button.place(relx=0.4, rely=0.3, anchor="center")   #place button at a suitable coordinate
 
     # Answer Selection Function
     def select_answer(choice, clicked_button):  #create def function
