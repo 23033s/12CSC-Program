@@ -227,15 +227,12 @@ def open_next_window(): #create next window
             "- There are 15 questions in total\n\n" #messages
             "- You need to get at least 9 out of 10 questions correct to pass the quiz\n" #messages
             "- Good luck and have fun learning new things!\n"),#messages
-
-
         return()   #return
     #Info button
     info_button = tk.PhotoImage(file="Images/info.png")  #convert image to a format so that tkinter can use
-    button = tk.Button(new_window, image=info_button, cursor="hand2", command=helpbox)    #crate button using tkinter, place it in new window, make it look clickable and link to helpbox pop-up
+    info_button = tk.Button(new_window, image=info_button, cursor="hand2", width= 50, height= 50, command=helpbox)    #crate button using tkinter, place it in new window, make it look clickable and link to helpbox pop-up
     button.image = info_button #name image
-    button.place(relx=0.4, rely=0.3, anchor="center")   #place button at a suitable coordinate
-
+    info_button.place(relx=0.4, rely=0.3, anchor="center")  # place button at a suitable coordinate
     # Answer Selection Function
     def select_answer(choice, clicked_button):  #create def function
         global selected_choice, current_selected_button   #keep track of choice and button selection
