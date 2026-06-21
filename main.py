@@ -222,17 +222,33 @@ def open_next_window(): #create next window
             "Quiz Info\n\n",  # text of title
                     "- Welcome to my Science Quiz!\n\n" #messages
             "- For each question, select one answer from the 4 answer choices.\n\n" #messages
-            "- Press the next button to submit your answer and move on to the next page\n\n" #messages
-            "- You cannot change your answer after it has been submited\n\n" #messages
-            "- There are 15 questions in total\n\n" #messages
-            "- You need to get at least 9 out of 10 questions correct to pass the quiz\n" #messages
+            "- Press the next button to submit your answer and move on to the next question.\n\n" #messages
+            "- You cannot change your answer after it has been submited, so ensure the answer you choose before submitting is your final answer.\n\n" #messages
+            "- There are 15 questions in total.\n\n" #messages
+            "- You need to get at least 9 out of 10 questions correct to pass the quiz.\n" #messages
+            "- If you don't feel like playing or want to restart, feel free to press the exit button.\n" #messages
             "- Good luck and have fun learning new things!\n"),#messages
         return()   #return
+
     #Info button
-    info_button = tk.PhotoImage(file="Images/info.png")  #convert image to a format so that tkinter can use
-    info_button = tk.Button(new_window, image=info_button, cursor="hand2", width= 50, height= 50, command=helpbox)    #crate button using tkinter, place it in new window, make it look clickable and link to helpbox pop-up
-    button.image = info_button #name image
-    info_button.place(relx=0.4, rely=0.3, anchor="center")  # place button at a suitable coordinate
+    info_image = Image.open("Images/info.png") #open the image from folder
+    info_image = info_image.resize((100, 60))   #resize the image to an appriopiate size
+
+    info_photo = ImageTk.PhotoImage(info_image) #load info button image
+
+    info_button = tk.Button(    #create button
+        new_window, #place in new window
+        image=info_photo,   #use the image as the button
+        command=helpbox,    #head to the helpbox def function to show messagebox
+        relief="flat",      #removes all 3D borders and shadowing from button
+        cursor="hand2",     #change cursor to hand to let users know this button is clickable
+        bg = "white",  # Set colour to initial background colour
+        activebackground = "#182156",  # Set colour active background colour to prevent flash when clicked
+        highlightthickness = 0  # Remove focus highlight around button
+    )
+    info_button.image = info_photo  #keep reference to image
+    info_button.place(relx=0.17, rely=0.28, anchor="center")  # place button at a suitable coordinate
+
     # Answer Selection Function
     def select_answer(choice, clicked_button):  #create def function
         global selected_choice, current_selected_button   #keep track of choice and button selection
@@ -270,10 +286,6 @@ def open_next_window(): #create next window
 
         #update question lagel and the four answer buttons
         question_label.config(text=question["question"]) # Update question text for my question label
-        answer1.config(text=question["choices"][0])  # Update answer buttons
-        answer2.config(text=question["choices"][1])  # Update answer buttons
-        answer3.config(text=question["choices"][2])  # Update answer buttons
-        answer4.config(text=question["choices"][3])  # Update answer buttons
 
         #progress change
         progress_label.config( #adjust progress label
