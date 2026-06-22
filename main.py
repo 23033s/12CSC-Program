@@ -225,9 +225,9 @@ def open_next_window(): #create next window
             "- Press the next button to submit your answer and move on to the next question.\n\n" #messages
             "- You cannot change your answer after it has been submited, so ensure the answer you choose before submitting is your final answer.\n\n" #messages
             "- There are 15 questions in total.\n\n" #messages
-            "- You need to get at least 9 out of 10 questions correct to pass the quiz.\n" #messages
-            "- If you don't feel like playing or want to restart, feel free to press the exit button.\n" #messages
-            "- Good luck and have fun learning new things!\n"),#messages
+            "- You need to get at least 9 out of 10 questions correct to pass the quiz.\n\n" #messages
+            "- If you don't feel like playing or want to restart, feel free to press the exit button.\n\n" #messages
+            "- Good luck and have fun learning new things!\n\n"),   #messages
         return()   #return
 
     #Info button
@@ -382,6 +382,9 @@ def open_next_window(): #create next window
         label = tk.Label(result_window, image=photo)    #create a label widget to display background image
         label.image = photo #keep reference of image
         label.pack()    #postions and displays image
+
+        # Calculate raw percentage
+        percentage = {score}/{len(quiz_data)} * 100
 
         #show user their score
         score_label = tk.Label( #create label
