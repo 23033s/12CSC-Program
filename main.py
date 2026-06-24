@@ -313,10 +313,21 @@ def open_next_window(): #create next window
 
         # Check answer
         correct_answer = quiz_data[current_index]["answer"] #check answer from dictionary
-        if selected_choice == correct_answer:   #check if the selected answer from user matches the correct answer
+        if selected_choice == correct_answer:   # if the selected answer from user matches the correct answer
             score += 1  #add a point
 
-        # Next question
+            feedback_label.config(  #show label for feedback
+                text=f"Great job, you have answered correctly!",    #words of encouragement
+                fg="green", #make text green
+                bg="#FDFD96",)    #make background black
+
+        else:
+            feedback_label.config(  #show label for feedback
+                text=f" Good try but Incorrect!\nThe answer was: {correct_answer}",     #words of encouragement
+                fg="red",   #make text red
+                bg="#FDFD96", )   #make background black
+
+            # Next question
         current_index += 1  #add 1 to index for progress
 
         # Reset selection
@@ -340,6 +351,14 @@ def open_next_window(): #create next window
         cursor="hand2",  #change cursor to hand to let users know this button is clickable
         command=submit_answer   #run the command of a submit button
     )
+    #create a label to tell user whether they answered a question correct or not
+    feedback_label = tk.Label( #create label and name it feedback_label
+        new_window, #place in new_window
+        text="",    #put text as nothing which will be replaced later by either a "correct" or an "incorrect" depending on whether user has answered correctly
+        font=("Fredoka", 18, "bold"),   #make font Fredoka to maintain consistency and make text bold and large enough to be seen by my users
+    )
+    #place the label at an suitable coordinate
+    feedback_label.place(x=400, y=325)
 
     #place the button at an suitable coordinate
     submit_btn.place(x=905, y=255, width=125, height=70)
@@ -383,9 +402,6 @@ def open_next_window(): #create next window
         label.image = photo #keep reference of image
         label.pack()    #postions and displays image
 
-        # Calculate raw percentage
-        percentage = {score}/{len(quiz_data)} * 100
-
         #show user their score
         score_label = tk.Label( #create label
             result_window,  #place in result_window
@@ -402,10 +418,10 @@ def open_next_window(): #create next window
 
         end_label = tk.Label(
             result_window,
+
             text= f"Congrats {username}, you have passed the test"
         )
         end_label.place(x=202, y=416, width=325, height=59)
-
     root.withdraw() #hide the window
 
 root.mainloop() #run the loop to keep window open
