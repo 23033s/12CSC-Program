@@ -10,6 +10,7 @@ import string #load a standard Python library containing helpful string constant
 score = 0
 current_index=0
 selected_choice= None
+warning_is_open = False
 
 #dictionary of questions, answer choices, answers and background image for that question
 quiz_data = [
@@ -98,6 +99,7 @@ username_entry.bind('<Return>', lambda event: check_username()) #allow users to 
 def open_next_window(): #create next window
     global selected_choice  #global variable to keep track of selected_choice
     global current_index, score #global variable to keep track of current question number and score
+    global warning_is_open
     current_index = 0 #Reset the current question number back to 0
     score = 0 #reset score back to 0
     new_window = tk.Toplevel(root) #create a pop-up window
@@ -302,13 +304,24 @@ def open_next_window(): #create next window
         global current_index
         global score
         global selected_choice
+        global warning_is_open
 
-        # Make sure an answer was chosen through error box
+        # Make sure an answer was chosen through an error message box
         if selected_choice is None: #if user doesn't select an button
+
+            # If a warning is already on screen, exit immediately
+            if warning_is_open:
+                return
+
+            # Set lock to True before showing the following message box
+            warning_is_open = True
+
             messagebox.showwarning( #create an error box
                 "You have not selected an Answer",   #text of title
                 "Please select an answer first before submitting, even if it is just a guess :)"   #message telling user to select an answer
             )
+            # Reset lock to False only after the user closes/exits the message box
+            warning_is_open = False
             return #return back
 
         # Check answer
