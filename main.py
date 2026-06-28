@@ -11,6 +11,7 @@ score = 0
 current_index=0
 selected_choice= None
 warning_is_open = False
+info_is_open = False
 
 #dictionary of questions, answer choices, answers and background image for that question
 quiz_data = [
@@ -100,6 +101,7 @@ def open_next_window(): #create next window
     global selected_choice  #global variable to keep track of selected_choice
     global current_index, score #global variable to keep track of current question number and score
     global warning_is_open
+    global info_is_open
     current_index = 0 #Reset the current question number back to 0
     score = 0 #reset score back to 0
     new_window = tk.Toplevel(root) #create a pop-up window
@@ -220,6 +222,14 @@ def open_next_window(): #create next window
 
     #create a pop up to help users better understand how quiz works
     def helpbox():   #create def function
+        global info_is_open
+        # If a warning is already on screen, exit immediately
+        if info_is_open:
+            return #return back
+
+        # Set lock to True before showing the following message box
+        info_is_open = True
+
         messagebox.showinfo(    #create  info messagebox
             "Quiz Info\n\n",  # text of title
                     "- Welcome to my Science Quiz!\n\n" #messages
@@ -229,8 +239,11 @@ def open_next_window(): #create next window
             "- There are 15 questions in total.\n\n" #messages
             "- You need to get at least 9 out of 10 questions correct to pass the quiz.\n\n" #messages
             "- If you don't feel like playing or want to restart, feel free to press the exit button.\n\n" #messages
-            "- Good luck and have fun learning new things!\n\n"),   #messages
-        return()   #return
+            "- Good luck and have fun learning new things!\n\n",   #messages
+        parent=new_window)  #pin messagebox on top of my main game window
+        # Reset lock to False only after the user closes/exits the message box
+        info_is_open = False
+        return   #return
 
     #Info button
     info_image = Image.open("Images/info.png") #open the image from folder
@@ -311,14 +324,15 @@ def open_next_window(): #create next window
 
             # If a warning is already on screen, exit immediately
             if warning_is_open:
-                return
+                return  #return back
 
             # Set lock to True before showing the following message box
             warning_is_open = True
 
             messagebox.showwarning( #create an error box
                 "You have not selected an Answer",   #text of title
-                "Please select an answer first before submitting, even if it is just a guess :)"   #message telling user to select an answer
+                "Please select an answer first before submitting, even if it is just a guess :)",   #message telling user to select an answer
+            parent=new_window   #keep this on top of new_window
             )
             # Reset lock to False only after the user closes/exits the message box
             warning_is_open = False
