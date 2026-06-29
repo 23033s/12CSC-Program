@@ -12,6 +12,7 @@ current_index=0
 selected_choice= None
 warning_is_open = False
 info_is_open = False
+username = ""
 
 #dictionary of questions, answer choices, answers and background image for that question
 quiz_data = [
@@ -77,6 +78,7 @@ outcome_label.place(relx=0.5, rely=0.58, anchor="center") #position the label us
 
 #username validation
 def check_username(): #function to check whether user enters a valid name
+    global username
     username = username_entry.get() #retrieve user input
 
     if any(char.isdigit() for char in username): #check if users enters all numbers as their username
