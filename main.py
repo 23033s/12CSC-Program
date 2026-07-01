@@ -239,7 +239,7 @@ def open_next_window(): #create next window
             "- Press the next button to submit your answer and move on to the next question.\n\n" #messages
             "- You cannot change your answer after it has been submited, so ensure the answer you choose before submitting is your final answer.\n\n" #messages
             "- There are 15 questions in total.\n\n" #messages
-            "- You need to get at least 9 out of 10 questions correct to pass the quiz.\n\n" #messages
+            "- You need to get at least 9 out of 15 questions correct to pass the quiz.\n\n" #messages
             "- If you don't feel like playing or want to restart, feel free to press the exit button.\n\n" #messages
             "- Good luck and have fun learning new things!\n\n",   #messages
         parent=new_window)  #pin messagebox on top of my main game window
@@ -356,18 +356,24 @@ def open_next_window(): #create next window
                 fg="red",   #make text red
                 bg="#FDFD96", )   #make background black
 
-            # Next question
-        current_index += 1  #add 1 to index for progress
 
-        # Reset selection
-        selected_choice = None  #reset selected choice
+        def next_question():
+            global current_index, selected_choice
 
-        # Check if quiz is done
-        if current_index >= len(quiz_data): #check if all questions were asked in the dictionary
-            new_window.destroy()    #close new window
-            show_results()  #go to results page
-        else:   #else
-            load_question() #otherwise load next question
+            current_index += 1
+            selected_choice = None
+
+            feedback_label.config(text="")
+            # Check if quiz is done
+            if current_index >= len(quiz_data): #check if all questions were asked in the dictionary
+                new_window.destroy()    #close new window
+                show_results()  #go to results page
+            else:   #else
+                load_question() #otherwise load next question
+
+        new_window.after(2000, next_question)
+
+
 
     #create a submit button
     submit_btn = tk.Button(     #name button
