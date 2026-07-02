@@ -90,7 +90,7 @@ def check_username(): #function to check whether user enters a valid name
     else:
         outcome_label.config(text=f"Welcome to the quiz, {username}!", fg="green") #welcome users in green if user enters a valid name
         button.config(command=lambda: None) #disables the button after the user has clicked it once to prevent multiple new windows from opening.
-        root.after(1750, open_next_window) #wait 1.75 seconds before heading to next window
+        root.after(1500, open_next_window) #wait 1.75 seconds before heading to next window
 
 #create username entry box
 username_entry = tk.Entry(root, font=("Arial", 15), bd=2.5, width=25) #create an entry box for users to enter their name
@@ -340,21 +340,25 @@ def open_next_window(): #create next window
             warning_is_open = False
             return #return back
 
+        def change_to_white():
+            feedback_label.config(bg="white")
+
         # Check answer
         correct_answer = quiz_data[current_index]["answer"] #check answer from dictionary
         if selected_choice == correct_answer:   # if the selected answer from user matches the correct answer
             score += 1  #add a point
 
             feedback_label.config(  #show label for feedback
-                text=f"Great job, you have answered correctly!",    #words of encouragement
+                text=f"Keep it up, you have answered correctly!",    #words of encouragement
                 fg="green", #make text green
-                bg="#FDFD96",)    #make background black
+                bg="#FDFD96"),    #make background pastel yellow
+
 
         else:
             feedback_label.config(  #show label for feedback
                 text=f" Good try but Incorrect!\nThe answer was: {correct_answer}",     #words of encouragement
                 fg="red",   #make text red
-                bg="#FDFD96", )   #make background black
+                bg="#FDFD96", )   #make background pastel yellow
 
 
         def next_question():
@@ -370,8 +374,8 @@ def open_next_window(): #create next window
                 show_results()  #go to results page
             else:   #else
                 load_question() #otherwise load next question
-
-        new_window.after(2000, next_question)
+        new_window.after(990, change_to_white)
+        new_window.after(1000,next_question)
 
 
 
@@ -453,10 +457,11 @@ def open_next_window(): #create next window
 
         end_label = tk.Label(
             result_window,
-
-            text= f"Congrats {username}, you have passed the test"
+            bg="white",
+            text= f"Congrats {username}, you have passed the test",
+            font = ("Fredoka", 15, "bold"),
         )
-        end_label.place(x=202, y=416, width=325, height=59)
+        end_label.place(x=375, y=235, width=380, height=59)
     root.withdraw() #hide the window
 
 root.mainloop() #run the loop to keep window open
