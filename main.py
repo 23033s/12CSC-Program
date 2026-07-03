@@ -143,6 +143,28 @@ def open_next_window(): #create next window
     #place the label at an suitable coordinate
     progress_label.place(x=58, y=43, width=120, height=70)
 
+    #Def function for preventing accidentally clicking exit button by adding confirmation button
+    def quit_quiz():    #create def function
+        global warning_is_open  #use global variable to be able to use warning_is_open
+
+        # If a warning is already on screen, exit immediately
+        if warning_is_open:
+            return  # return back
+
+        # Set lock to True before showing the following message box
+        warning_is_open = True
+        answer = messagebox.askyesno(   #create confirmation messagebox
+            "Exit Quiz Confirmation",    #title
+            "Are you sure you want to quit?\n\n"    #text
+                    "If so, feel free to come back anytime!",   #text
+                    parent = new_window) #pin messagebox on top of my main game window
+
+        if answer:  #if yes
+            root.destroy()  #end code by destroying window
+
+        # Reset lock to False only after the user closes/exits the message box
+        warning_is_open = False
+
     #create a exit button
     exit_btn = tk.Button(   #name button
         new_window, #put button in new_window
@@ -152,7 +174,7 @@ def open_next_window(): #create next window
         bg="white", #set label background colour to white
         relief="flat",  #removes all 3D borders and shadowing from button
         cursor="hand2",  #change cursor to hand to let users know this button is clickable
-        command = root.destroy #end code
+        command = quit_quiz #show confirmation messagebox from quit_quiz def function
     )
 
     #place the button at an suitable coordinate
