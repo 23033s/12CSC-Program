@@ -53,7 +53,7 @@ label.pack() #place the label onto the window
 
 #start button
 start_button = tk.PhotoImage(file="Images/startbutton.png") #load start button image
-button = tk.Button(root, image=start_button, relief="flat", #put button in intro page, use the image of my start_button as the button and make the border of button have no 3D effect.
+button = tk.Button(root, image=start_button, relief="flat", #create and name button, put button in intro page, use the image of my start_button as the button and make the border of button have no 3D effect.
                    cursor="hand2",              #changes the cursor to a hand when reaches button
                    bg="#182156",                # Set colour to initial background colour
                    activebackground="#182156",  # Set colour active background colour to prevent flash when clicked
@@ -73,7 +73,7 @@ button.bind("<Enter>", on_enter) #link mouse entry to previous function (on_ente
 button.bind("<Leave>", on_leave) #link mouse exit to previous function (on_leave)
 
 #create label telling users to enter their username
-outcome_label = tk.Label(root, text="Please Enter In Your Name", font=("Agrandir", 15, "bold")) #Ask user to enter their name
+outcome_label = tk.Label(root, text="Please Enter In Your Name", font=("Agrandir", 15, "bold")) #create and name label, place in start page, ask user to enter their name, change font, font size and make bold
 outcome_label.place(relx=0.5, rely=0.58, anchor="center") #position the label using coordinates and centre the label
 
 #username validation
@@ -93,7 +93,7 @@ def check_username(): #function to check whether user enters a valid name
         root.after(1500, open_next_window) #wait 1.75 seconds before heading to next window
 
 #create username entry box
-username_entry = tk.Entry(root, font=("Arial", 15), bd=2.5, width=25) #create an entry box for users to enter their name
+username_entry = tk.Entry(root, font=("Arial", 15), bd=2.5, width=25) #create and name entry box for users to enter their name
 username_entry.place(relx=0.5, rely=0.52, anchor="center") #position the box using coordinates and centre the box
 button.config(command=check_username) #check username for the function
 username_entry.bind('<Return>', lambda event: check_username()) #allow users to click enter on their keyboard when entering in a name
@@ -115,11 +115,11 @@ def open_next_window(): #create next window
     bg_image = Image.open("Images/q1.png") #open background image for first question
     bg_photo = ImageTk.PhotoImage(bg_image) #convert image to a format tkinter can use
     bg_label = tk.Label(new_window, image=bg_photo) #create a label widget to display background image
-    bg_label.image = bg_photo #reference image
+    bg_label.image = bg_photo # keep reference of image
     bg_label.place(x=0, y=0, relwidth=1, relheight=1) #pins the top-left corner of the label to the exact top-left corner of new window and set the width and height of the label relative to the parent window
 
     #create a label to display question
-    question_label = tk.Label(  #name label
+    question_label = tk.Label(  #create and name label
         new_window, #put label in new_window
         text="Question 1", #text
         font=("Fredoka", 28, "bold"), #font and size of the text and make text bold
@@ -132,7 +132,7 @@ def open_next_window(): #create next window
     question_label.place(x=285, y=35, width=600, height=80)
 
     #create a progress label to display what question the user is currently at
-    progress_label = tk.Label(  #name label
+    progress_label = tk.Label(  #create and name label
         new_window, #put label in new_window
         text=f"1/{len(quiz_data)}", #text of progress
         font=("Fredoka", 35, "bold"),   #font and size of the text and make text bold
@@ -140,8 +140,19 @@ def open_next_window(): #create next window
         bg="white"  #set label background colour to white
     )
 
-    #place the label at an suitable coordinate
-    progress_label.place(x=58, y=43, width=120, height=70)
+    # place the label at an suitable coordinate
+    progress_label.place(x=56, y=43, width=120, height=70)
+
+    #create a current score label to display how many correct answers the user has gotten
+    current_score_label = tk.Label( #create and name label
+        new_window,  #put label in new_window
+        text="Score: 0", #text which will be updated
+        font=("Fredoka", 18, "bold"),   #font and size of the text and make text bold
+        bg="white"  #set label background colour to white
+    )
+
+    # place the label at an suitable coordinate
+    current_score_label.place(relx=0.07, rely=0.28, anchor="center")
 
     #Def function for preventing accidentally clicking exit button by adding confirmation button
     def quit_quiz():    #create def function
@@ -166,7 +177,7 @@ def open_next_window(): #create next window
         warning_is_open = False
 
     #create a exit button
-    exit_btn = tk.Button(   #name button
+    exit_btn = tk.Button(   #create and name button
         new_window, #put button in new_window
         text="QUIT",    #text
         font=("Fredoka", 25, "bold"),   #font and size of the text and make text bold
@@ -185,7 +196,7 @@ def open_next_window(): #create next window
     current_selected_button = None #Define the variable to prevent errors on startup before any button is clicked
 
     #create first answer button
-    answer1 = tk.Button( #name answer button
+    answer1 = tk.Button( #create and name answer button
         new_window, #put button in new_window
         text="Answer 1",    #text
         font=("Fredoka", 18, "bold"),   #font and size of the text and make text bold
@@ -193,14 +204,14 @@ def open_next_window(): #create next window
         bg="white", #set label background colour to white
         relief="flat",  #removes all 3D borders and shadowing from button
         cursor="hand2",  #change cursor to hand to let users know this button is clickable
-        command = lambda: select_answer(answer1["text"], answer1) #run the selected answer with the following def command
+        command = lambda: select_answer(answer1["text"], answer1) #run the selected answer with the following def command to see if answer is correct or incorrect
     )
 
     #place the button at an suitable coordinate
     answer1.place(x=202, y=416, width=325, height=59)
 
     #create second answer button
-    answer2 = tk.Button(    #name answer button
+    answer2 = tk.Button(    #create and name answer button
         new_window, #put button in new_window
         text="Answer 2",    #text
         font=("Fredoka", 18, "bold"),   #font and size of the text and make text bold
@@ -208,14 +219,14 @@ def open_next_window(): #create next window
         bg="white", #set label background colour to white
         relief="flat",  #removes all 3D borders and shadowing from button
         cursor="hand2",  #change cursor to hand to let users know this button is clickable
-        command = lambda: select_answer(answer2["text"], answer2) #run the selected answer with the following def command
+        command = lambda: select_answer(answer2["text"], answer2) #run the selected answer with the following def command to see if answer is correct or incorrect
     )
 
     # place the button  at an suitable coordinate
     answer2.place(x=661, y=416, width=325, height=59)
 
     #create third answer button
-    answer3 = tk.Button(    #name answer button
+    answer3 = tk.Button(    #create and name answer button
         new_window, #put button in new_window
         text="Answer 3",    #text
         font=("Fredoka", 18, "bold"),   #font and size of the text and make text bold
@@ -223,14 +234,14 @@ def open_next_window(): #create next window
         bg="white", #set label background colour to white
         relief="flat",  #removes all 3D borders and shadowing from button
         cursor="hand2",  #change cursor to hand to let users know this button is clickable
-        command = lambda: select_answer(answer3["text"], answer3) #run the selected answer with the following def command
+        command = lambda: select_answer(answer3["text"], answer3) #run the selected answer with the following def command to see if answer is correct or incorrect
     )
 
     # place the button  at an suitable coordinate
     answer3.place(x=202, y=567, width=325, height=58)
 
     #create fourth answer button
-    answer4 = tk.Button(    #name answer button
+    answer4 = tk.Button(    #create and name answer button
         new_window, #put button in new_window
         text="Answer 4",    #text
         font=("Fredoka", 18, "bold"),   #font and size of the text and make text bold
@@ -238,7 +249,7 @@ def open_next_window(): #create next window
         bg="white", #set label background colour to white
         relief="flat",  #removes all 3D borders and shadowing from button
         cursor="hand2",  #change cursor to hand to let users know this button is clickable
-        command = lambda: select_answer(answer4["text"], answer4) #run the selected answer with the following def command
+        command = lambda: select_answer(answer4["text"], answer4) #run the selected answer with the following def command to see if answer is correct or incorrect
     )
 
     # place the button  at an suitable coordinate
@@ -261,8 +272,8 @@ def open_next_window(): #create next window
             "- Press the next button to submit your answer and move on to the next question.\n\n" #messages
             "- You cannot change your answer after it has been submited, so ensure the answer you choose before submitting is your final answer.\n\n" #messages
             "- There are 15 questions in total.\n\n" #messages
-            "- You need to get at least 9 out of 15 questions correct to pass the quiz.\n\n" #messages
-            "- If you don't feel like playing or want to restart, feel free to press the exit button.\n\n" #messages
+            "- You need to get at least 9 out of 15 questions correct (which is 60%) to pass the quiz.\n\n" #messages
+            "- If you don't feel like playing or want to restart, feel free to press the exit button. This ends the code.\n\n" #messages
             "- Good luck and have fun learning new things!\n\n",   #messages
         parent=new_window)  #pin messagebox on top of my main game window
         # Reset lock to False only after the user closes/exits the message box
@@ -275,7 +286,7 @@ def open_next_window(): #create next window
 
     info_photo = ImageTk.PhotoImage(info_image) #load info button image
 
-    info_button = tk.Button(    #create button
+    info_button = tk.Button(    #create and name button
         new_window, #place in new window
         image=info_photo,   #use the image as the button
         command=helpbox,    #head to the helpbox def function to show messagebox
@@ -308,6 +319,7 @@ def open_next_window(): #create next window
         question = quiz_data[current_index] #load question from dictionary
         global current_selected_button  #keep track of current_selected_button
         current_selected_button = None  #set current selected button as none
+        global button_map
 
         #shuffle choices around to prevent users from just memorising which button contains the answers if they were to play the quiz again
         choices = question["choices"][:]
@@ -318,17 +330,26 @@ def open_next_window(): #create next window
         answer4.config(text=choices[3])
 
         #answer button colour
-        answer1.config(bg="white")  #reset colour of button
-        answer2.config(bg="white")  #reset colour of button
-        answer3.config(bg="white")  #reset colour of button
-        answer4.config(bg="white")  #reset colour of button
+        answer1.config(bg="white")  #reset colour of button back to white
+        answer2.config(bg="white")  #reset colour of button back to white
+        answer3.config(bg="white")  #reset colour of button back to white
+        answer4.config(bg="white")  #reset colour of button back to white
 
-        #update question lagel and the four answer buttons
+        #enable buttons
+        answer1.config(state="normal")
+        answer2.config(state="normal")
+        answer3.config(state="normal")
+        answer4.config(state="normal")
+
+        #update question label and the four answer buttons
         question_label.config(text=question["question"]) # Update question text for my question label
 
-        #progress change
+        #update progress
         progress_label.config( #adjust progress label
         text=f"{current_index + 1}/{len(quiz_data)}" ) # Update progress label for each question
+
+        #update current score
+        current_score_label.config(text=f"Score: {score}")  #update score for each correct answer
 
         #Update background image for each question
         new_bg = Image.open(question["background"]) #use the Pillow library (PIL) to load image and fetch questions in the dictionary
@@ -336,7 +357,14 @@ def open_next_window(): #create next window
         bg_label.config(image=new_bg_photo) #Changes the image property of an existing label named bg_label so now image instantly appears on screen
         bg_label.image = new_bg_photo #keep reference of image
 
-    #function for submitting answer
+        #dictionary called Button map which will help change the colour of the answer the user has selected
+        button_map = {
+            answer1["text"]: answer1,
+            answer2["text"]: answer2,
+            answer3["text"]: answer3,
+            answer4["text"]: answer4}
+
+        #function for submitting answer
     def submit_answer():    #create def function
         global current_index
         global score
@@ -361,9 +389,9 @@ def open_next_window(): #create next window
             # Reset lock to False only after the user closes/exits the message box
             warning_is_open = False
             return #return back
-
-        def change_to_white():
-            feedback_label.config(bg="white")
+        #def function to change feedback label to white
+        def change_to_white():  #create def function
+            feedback_label.config(bg="white")   #change background of feedback label to white
 
         # Check answer
         correct_answer = quiz_data[current_index]["answer"] #check answer from dictionary
@@ -382,6 +410,19 @@ def open_next_window(): #create next window
                 fg="red",   #make text red
                 bg="#FDFD96", )   #make background pastel yellow
 
+        #Changing answer buttons
+        # Colour the chosen answer red if incorrect
+        if selected_choice != correct_answer:   #if answer is incorrect
+            button_map[selected_choice].config(bg="#ff6b6b")    #change to red
+
+        # Colour the correct answer green
+        button_map[correct_answer].config(bg="#7CFC00") #change to green
+
+        #disable changing colour
+        answer1.config(state="disabled")
+        answer2.config(state="disabled")
+        answer3.config(state="disabled")
+        answer4.config(state="disabled")
 
         def next_question():
             global current_index, selected_choice
@@ -389,20 +430,24 @@ def open_next_window(): #create next window
             current_index += 1
             selected_choice = None
 
-            feedback_label.config(text="")
+            #feedback label
+            feedback_label.config(text="")  #change text
+
             # Check if quiz is done
             if current_index >= len(quiz_data): #check if all questions were asked in the dictionary
                 new_window.destroy()    #close new window
                 show_results()  #go to results page
             else:   #else
                 load_question() #otherwise load next question
+        #change background to white after 990 ms
         new_window.after(990, change_to_white)
+        #head to next question aftwe 1000ms
         new_window.after(1000,next_question)
 
 
 
     #create a submit button
-    submit_btn = tk.Button(     #name button
+    submit_btn = tk.Button(     #create and name button
         new_window, #put button in new_window
         text="SUBMIT",  #text
         font=("Fredoka", 25, "bold"),   #font and size of the text and make text bold
@@ -447,6 +492,7 @@ def open_next_window(): #create next window
 
     #End page (win or lose)
     def show_results(): #create def function
+        global warning_is_open
         result_window = tk.Toplevel(root)   #create a pop-up window
         result_window.title("Results Page") #create title
         result_window.geometry("1225x690")  #resize window
@@ -458,32 +504,112 @@ def open_next_window(): #create next window
         else:   #otherwise
             image = Image.open("Images/losepage.png")   #open lose page
 
+        #background images for win/lose page
         photo = ImageTk.PhotoImage(image)   #convert image to a format tkinter can use
         label = tk.Label(result_window, image=photo)    #create a label widget to display background image
         label.image = photo #keep reference of image
-        label.pack()    #postions and displays image
+        label.pack()    #positions image
 
         #show user their score
-        score_label = tk.Label( #create label
+        score_label = tk.Label( #create and name label
             result_window,  #place in result_window
             text=f"{score}/{len(quiz_data)}",   #text
-            font=("Fredoka", 40, "bold"),    #font, font size, make bold
+            font=("Fredoka", 35, "bold"),    #font, font size, make bold
             bg="white", #set background to white
             activebackground = "#182156",   #set active background to dark blue
             highlightthickness = 0, #remove highlight thickness
             relief="flat"   #   #removes all 3D borders and shadowing from button
         )
 
-        #place label at an suitable coordinate
-        score_label.place(relx=0.45, rely=0.66, anchor="center", width=125, height=70)
+        # place label at an suitable coordinate
+        score_label.place(relx=0.35, rely=0.675, anchor="center", width=120, height=80)
 
-        end_label = tk.Label(
-            result_window,
-            bg="white",
-            text= f"Congrats {username}, you have passed the test",
-            font = ("Fredoka", 15, "bold"),
+        #show percentage score
+        percentage_label= tk.Label( #create and name percentage label using tkinter
+            result_window,  # place in result_window
+            font=("Fredoka", 35, "bold"),  # font, font size, make bold
+            bg="white",  # set background to white
+            activebackground="#182156",  # set active background to dark blue
+            highlightthickness=0,  # remove highlight thickness
+            relief="flat",  # #removes all 3D borders and shadowing from button
+            text=f"{(score / len(quiz_data)):.0%}" # Update progress label for each question
         )
-        end_label.place(x=375, y=235, width=380, height=59)
+
+        #place label at an suitable coordinate
+        percentage_label.place(relx=0.54, rely=0.675, anchor="center", width=120, height=80)
+
+        # or label
+        or_label = tk.Label(  # create percentage label using tkinter
+            result_window,  # place in result_window
+            font=("Fredoka", 20, "bold"),  # font, font size, make bold
+            bg="white",  # set background to white
+            activebackground="#182156",  # set active background to dark blue
+            highlightthickness=0,  # remove highlight thickness
+            relief="flat",  # #removes all 3D borders and shadowing from button
+            text="or"  # Update progress label for each question
+        )
+
+        # place label at an suitable coordinate
+        or_label.place(relx=0.445, rely=0.675, anchor="center", width=120, height=80)
+
+        #greet user
+        end_label = tk.Label(   #create and name label
+            result_window,  #put in end window
+            bg="white", #make background white
+            text= f"Congrats {username}, you have passed the test", #text
+            font = ("Fredoka", 15, "bold"), #change font to Fredoka, make font size 15, and make bold
+        )
+
+        # place label at an suitable coordinate
+        end_label.place(x=350, y=230, width=400, height=59)
+
+        #random messages of positive feedback
+        messages = [
+            "Fantastic work!",
+            "Excellent effort!",
+            "You're a science superstar!",
+            "Great job!",
+            "Keep learning!"
+        ]
+        #send one random message of positive feedback
+        message = random.choice(messages)
+
+        #def function for quit button
+        def quit_quiz():  # create def function
+            global warning_is_open  # use global variable to be able to use warning_is_open
+
+            # If a warning is already on screen, exit immediately
+            if warning_is_open:
+                return  # return back
+
+            # Set lock to True before showing the following message box
+            warning_is_open = True
+            answer = messagebox.askyesno(  # create confirmation messagebox
+                "Exit Quiz Confirmation",  # title
+                "Are you sure you want to quit?\n\n"  # text
+                "If so, feel free to come back anytime!",  # text
+                parent=new_window)  # pin messagebox on top of my main game window
+
+            if answer:  # if yes
+                root.destroy()  # end code by destroying window
+
+            # Reset lock to False only after the user closes/exits the message box
+            warning_is_open = False
+
+        exit_button = tk.Button(    #create and name button
+            result_window,  #put in end window
+            font=("Fredoka", 30, "bold"),  # font and size of the text and make text bold
+            fg="black",  # set text colour to back
+            text="EXIT",
+            bg="white",  # set label background colour to white
+            relief="flat",  # removes all 3D borders and shadowing from button
+            cursor="hand2",  # change cursor to hand to let users know this button is clickable
+            command = quit_quiz #run command with following def function
+        )
+
+
+        exit_button.place(x=590, y=545, width=120, height=70)
+
     root.withdraw() #hide the window
 
 root.mainloop() #run the loop to keep window open
