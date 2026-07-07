@@ -557,12 +557,13 @@ def open_next_window(): #create next window
         message_label = tk.Label(   #create and name label using tkinter
             result_window,  #place in end window
             text=message,   #print random positive or negative image depending on users score
+            wraplength=600,  # automatically break the text into a new line if it exceeds 100 pixels in width
             font=("Fredoka", 18, "bold"),   #change font to Fredoka, make font size 18, make bold
             bg="white", #make background white
             fg=text_colour  #make font colour depending on user score
         )
         # place label at an suitable coordinate
-        message_label.place(x=350, y=100, width=600, height=40)
+        message_label.place(x=450, y=100, width=800, height=90, anchor="center")
 
 
         #show user their score
@@ -626,7 +627,7 @@ def open_next_window(): #create next window
 
         #def function for quit button
         def quit_quiz():  # create def function
-            global warning_is_open  # use global variable to be able to use warning_is_open
+            global warning_is_open  # use global variable to be able to use warning_is_open which filter controls whether warnings are ignored, displayed, or turned into errors.
 
             # If a warning is already on screen, exit immediately
             if warning_is_open:
