@@ -514,7 +514,7 @@ def open_next_window(): #create next window
         label.image = photo #keep reference of image
         label.pack()    #positions image
 
-        # random messages of positive feedback
+        # dictionary random messages of positive feedback
         positive_messages = [
             "Amazing work!",
             "Fantastic effort!",
@@ -529,7 +529,7 @@ def open_next_window(): #create next window
             "You should be so proud of what you've learned. You're ready for whatever comes next!"
         ]
 
-        # random messages of negative feedback
+        # dictionary random messages of negative feedback
         negative_messages = [
             "Good effort!",
             "Keep practising!",
@@ -558,12 +558,12 @@ def open_next_window(): #create next window
             result_window,  #place in end window
             text=message,   #print random positive or negative image depending on users score
             wraplength=600,  # automatically break the text into a new line if it exceeds 100 pixels in width
-            font=("Fredoka", 18, "bold"),   #change font to Fredoka, make font size 18, make bold
+            font=("Fredoka", 17, "bold"),   #change font to Fredoka, make font size 18, make bold
             bg="white", #make background white
             fg=text_colour  #make font colour depending on user score
         )
         # place label at an suitable coordinate
-        message_label.place(x=450, y=100, width=800, height=90, anchor="center")
+        message_label.place(x=525, y=90, width=850, height=100, anchor="center")
 
 
         #show user their score
@@ -693,6 +693,19 @@ def open_next_window(): #create next window
 
         #place button at an suitable coordinate
         play_again_button.place(x=370, y=540, width=130, height=75)
+
+        #applying same hover effects to buttons to be consistent with other buttons and to further help users
+        def on_enter(event):    #hovering over a button
+            event.widget.config(bg="#D6D6D6")   #change colour of button to gray
+
+        def on_leave(event):    #stop hovering over a button
+            event.widget.config(bg="white") #change colour back to white
+
+        play_again_button.bind("<Enter>", on_enter) #bind to play_again button
+        play_again_button.bind("<Leave>", on_leave) #bind to play_again button
+
+        exit_button.bind("<Enter>", on_enter) #bind to exit button
+        exit_button.bind("<Leave>", on_leave) #bind to exit button
 
     root.withdraw() #hide the start window
 
