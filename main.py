@@ -543,7 +543,6 @@ def open_next_window(): #create next window
             "Every expert started right where you are now. Let's dust ourselves off and try again.",
             "Everyone has off days, and that is completely okay.",
             "The best way to grow your brain is by making mistakes and fixing them. You're on the right track.",
-
         ]
         #postive and negative messages
         if score >= 9:  # if user scores 9 or more
@@ -563,7 +562,7 @@ def open_next_window(): #create next window
             fg=text_colour  #make font colour depending on user score
         )
         # place label at an suitable coordinate
-        message_label.place(x=525, y=90, width=850, height=100, anchor="center")
+        message_label.place(x=525, y=90, width=800, height=100, anchor="center")
 
 
         #show user their score
