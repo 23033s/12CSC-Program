@@ -541,7 +541,7 @@ def open_next_window(): #create next window
             "A low score just means you are in the middle of learning something new. Keep going!",
             "Your score today doesn't define how smart you are. It just shows where we need to start next time.",
             "Every expert started right where you are now. Let's dust ourselves off and try again.",
-            "Everyone has off days, and that is completely okay.",
+            "Everyone has bad days, and that is completely okay.",
             "The best way to grow your brain is by making mistakes and fixing them. You're on the right track.",
         ]
         #postive and negative messages
