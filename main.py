@@ -7,12 +7,12 @@ import random #generate random choices, numbers, shuffle sequences
 import string #load a standard Python library containing helpful string constants
 
 #Global variables for my quiz
-score = 0
-current_index=0
-selected_choice= None
-warning_is_open = False
-info_is_open = False
-username = ""
+score = 0 #set score as 0
+current_index=0 #set progress as 0
+selected_choice= None  #reset user's selected choice
+warning_is_open = False #set variable to false
+info_is_open = False    #set variable to false
+username = "" #set username as empty space to be able to use variable later
 
 #dictionary of questions, answer choices, answers and background image for that question
 quiz_data = [
@@ -90,7 +90,7 @@ def check_username(): #function to check whether user enters a valid name
     else:
         outcome_label.config(text=f"Welcome to the quiz, {username}!", fg="green") #welcome users in green if user enters a valid name
         button.config(command=lambda: None) #disables the button after the user has clicked it once to prevent multiple new windows from opening.
-        root.after(1500, open_next_window) #wait 1.75 seconds before heading to next window
+        root.after(1500, open_next_window) #wait 1.5 seconds before heading to next window
 
 #create username entry box
 username_entry = tk.Entry(root, font=("Arial", 15), bd=2.5, width=25) #create and name entry box for users to enter their name
@@ -102,9 +102,9 @@ username_entry.bind('<Return>', lambda event: check_username()) #allow users to 
 def open_next_window(): #create next window
     global selected_choice  #global variable to keep track of selected_choice
     global current_index, score #global variable to keep track of current question number and score
-    global new_window
-    global warning_is_open
-    global info_is_open
+    global new_window #set as global variable
+    global warning_is_open #global variable to be able to use variable
+    global info_is_open #global variable to be able to use variable
     current_index = 0 #Reset the current question number back to 0
     score = 0 #reset score back to 0
     new_window = tk.Toplevel(root) #create a pop-up window
@@ -147,7 +147,7 @@ def open_next_window(): #create next window
     #create a current score label to display how many correct answers the user has gotten
     current_score_label = tk.Label( #create and name label
         new_window,  #put label in new_window
-        text="Score: 0", #text which will be updated
+        text="Score: 0", #text showing current score starting with 0 which will be updated
         font=("Fredoka", 18, "bold"),   #font and size of the text and make text bold
         bg="white"  #set label background colour to white
     )
@@ -446,7 +446,7 @@ def open_next_window(): #create next window
             else:   #else
                 load_question() #otherwise load next question
 
-        #head to next question after 1000ms
+        #head to next question after 1000ms (1 second)
         new_window.after(1000,next_question)
 
     #create a submit button
@@ -573,7 +573,7 @@ def open_next_window(): #create next window
             bg="white", #set background to white
             activebackground = "#182156",   #set active background to dark blue
             highlightthickness = 0, #remove highlight thickness
-            relief="flat"   #   #removes all 3D borders and shadowing from button
+            relief="flat"   #   #removes all 3D borders and shadowing from label
         )
 
         # place label at an suitable coordinate
@@ -586,8 +586,8 @@ def open_next_window(): #create next window
             bg="white",  # set background to white
             activebackground="#182156",  # set active background to dark blue
             highlightthickness=0,  # remove highlight thickness
-            relief="flat",  # #removes all 3D borders and shadowing from button
-            text=f"{(score / len(quiz_data)):.0%}" # Update progress label for each question
+            relief="flat",  # #removes all 3D borders and shadowing from label
+            text=f"{(score / len(quiz_data)):.0%}" # show users score as a percentage
         )
 
         #place label at an suitable coordinate
@@ -600,24 +600,24 @@ def open_next_window(): #create next window
             bg="white",  # set background to white
             activebackground="#182156",  # set active background to dark blue
             highlightthickness=0,  # remove highlight thickness
-            relief="flat",  # #removes all 3D borders and shadowing from button
+            relief="flat",  # #removes all 3D borders and shadowing from label
             text="or"  #text
         )
 
         # place label at an suitable coordinate
         or_label.place(relx=0.445, rely=0.675, anchor="center", width=115, height=80)
 
-        #congratulating user
+        #congratulating user based on whether they have passed or failed
         if score >= 9:  #if score is equal or greater than 9
-            end_text = f"Cheers to you for a job well done, {username}!"    #text
+            end_text = f"Cheers to you for a job well done, {username}!"    #text to user
         else:   #else
-            end_text = f"Good effort {username}!"   #text
+            end_text = f"Good effort {username}!"   #text to user
 
         #greet user
         end_label = tk.Label(   #create and name label
             result_window,  #put in end window
             bg="white", #make background white
-            text= end_text, #positive or negative text based on users score
+            text= end_text, #show positive or negative text based on users score
             font = ("Fredoka", 15, "bold"), #change font to Fredoka, make font size 15, and make bold
         )
 
